@@ -224,7 +224,7 @@ career_data = [
     
     {
         "name": "Electrical Engineer",
-        "interests": {"maths": 4."physics":4},
+        "interests": {"maths": 4,"physics":4},
         "skills": {"problem solving": 4},
     },
    

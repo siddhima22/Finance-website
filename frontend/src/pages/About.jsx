@@ -11,18 +11,18 @@ export default function About() {
         About Us
       </Heading>
       <Text>
-        Our web app, SkillSetGo, simplifies the process of scheduling doctor
+        Our web app, CareerCompass, simplifies the process of scheduling doctor
         appointments for common people using cutting-edge AI technology. We
         understand that booking medical appointments can be a daunting task,
         especially for individuals with busy schedules or those seeking prompt
         medical care.
       </Text>
       <Text>
-        With SkillSetGo, you can say goodbye to the hassle of manually finding
+        With CareerCompass, you can say goodbye to the hassle of manually finding
         and coordinating appointment slots with healthcare providers. Our
         intuitive interface allows you to search for available doctors,
         specialists, and clinics in your area effortlessly. Whether you need a
-        routine check-up, consultation, or specialized treatment, SkillSetGo
+        routine check-up, consultation, or specialized treatment, CareerCompass
         makes it easy to find the right healthcare professional.
       </Text>
       <Text>
@@ -34,7 +34,7 @@ export default function About() {
         appointment.
       </Text>
       <Text>
-        SkillSetGo is designed to empower you to take control of your health
+        CareerCompass is designed to empower you to take control of your health
         journey. We believe that everyone deserves easy access to quality
         healthcare, and our web app is here to simplify the process for you.
       </Text>

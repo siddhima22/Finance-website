@@ -50,6 +50,7 @@ app.use('/api/auth', require('./routes/auth'))
 app.use('/api/notes', require('./routes/notes'))
 app.use('/api/images', require('./routes/images'))
 app.use('/api/forum', require('./routes/forum'))
+app.use('/api/career', require('./routes/career'))
 // app.use('/api/chatbot', require('./routes/chatbot'))
 
 

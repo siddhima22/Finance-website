@@ -30,6 +30,23 @@ function Comment({ comment }) {
     paddingLeft: '10px', // Padding to separate child comments
   };
 
+  // Function to detect links in the comment text
+  const detectLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const matches = text.match(urlRegex);
+
+    if (matches) {
+      return matches.map((url, index) => (
+        <Link key={index} href={url} isExternal color="teal.500" textDecor="underline" fontWeight="bold">
+          {url}
+          <LinkIcon mx="2px" />
+        </Link>
+      ));
+    }
+
+    return text;
+  };
+
   return (
     <Box
       borderWidth="1px"
@@ -40,7 +57,7 @@ function Comment({ comment }) {
       <HStack spacing={4} align="center">
         <Avatar size="sm" src="/path-to-comment-avatar.jpg" alt="Comment Author" />
         <Heading as="h3" fontSize={{ base: 'sm', md: 'md' }}>
-          {comment.text}
+        {detectLinks(comment.text)}
         </Heading>
       </HStack>
       <HStack spacing={2} mt={2} align="center">

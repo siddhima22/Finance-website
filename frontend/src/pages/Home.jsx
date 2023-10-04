@@ -43,17 +43,17 @@ const Home = () => {
         >
            <GridItem colSpan={{ base: 12, md: isSmallerThanMd ? 0 : 6 }}>
             {/* Add an image here */}
-            <Image src="doc_with_bg.png" alt="SkillSetGo Image" />
+            <Image src="doc_with_bg.png" alt="CareerCompass Image" />
           </GridItem>
           <GridItem
             colSpan={{ base: 12, md: isSmallerThanMd ? 12 : 6 }}
             textAlign={isSmallerThanMd ? "center" : "left"}
           >
             <Heading as="h1" size="xl" mb={4}>
-              Simplify Medical Appointments with SkillSetGo
+              Simplify Medical Appointments with CareerCompass
             </Heading>
             <Text fontSize={{ base: "md", md: "lg" }} mb={8}>
-              Our web app, SkillSetGo, simplifies the process of scheduling
+              Our web app, CareerCompass, simplifies the process of scheduling
               doctor appointments for common people using cutting-edge AI
               technology. We understand that booking medical appointments can be
               a daunting task, especially for individuals with busy schedules or

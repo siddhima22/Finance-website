@@ -78,7 +78,7 @@ left={0}
          size="lg" 
          color="black"
           textAlign="left">
-          SkillSetGo
+          CareerCompass
         </Heading>
         <Spacer />
 
