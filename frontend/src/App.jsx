@@ -30,6 +30,7 @@ import Dashboard from './pages/Dashboard'
 import Reviews from './pages/Reviews'
 import Profile from './pages/Profile'
 import Calendar from './pages/Calendar'
+import ResourcesPage from './pages/Resources.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +38,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       
 
-      <Route path="dashboard" element={<Dashboard />} />
+      <Route index element={<Dashboard />} />
       <Route path="reviews" element={<Reviews/>} />
       <Route path="profile" element={<Profile />} />
       
@@ -47,7 +48,7 @@ const router = createBrowserRouter(
       <Route path="authenticate" element={<Signup/>} />
       <Route path="doctors" element={<Finder/>} />
       <Route path="reports" element={<Dashboard/>} />
-      <Route path="bookappointment" element={<About />} />
+      <Route path="resources" element={<ResourcesPage />} />
       <Route path="about" element={<About />} />
       <Route path="help" element={<HelpLayout />}>
         <Route path="faq" element={<Faq />} />

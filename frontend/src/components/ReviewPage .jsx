@@ -28,7 +28,7 @@ const ReviewPage = () => {
         justifyContent="center"
         alignItems={{ base: "center", md: "flex-start" }}
       >
-        <Text fontSize="xl" fontWeight="semibold" color="green.800">
+        <Text fontSize="xl" fontWeight="semibold" color="blue.800">
           Add a Review
         </Text>
         <Textarea
@@ -70,15 +70,15 @@ const ReviewPage = () => {
             px={4}
             py={2}
             rounded="md"
-            bg="green.600"
+            bg="blue.600"
             border="1px"
-            borderColor="green.800"
+            borderColor="blue.800"
             color="white"
             fontSize="sm"
             fontWeight="semibold"
             cursor="pointer"
             _hover={{
-              bg: "green.700",
+              bg: "blue.700",
             }}
           >
             Submit
