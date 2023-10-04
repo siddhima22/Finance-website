@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import ReviewPage from "../components/ReviewPage ";
+import ForumApp from "../components/ForumApp";
 
 // import Carousel from "../components/Carousel";
   const cardsData = [
@@ -37,7 +38,6 @@ const Home = () => {
 
   return (
     <Box pb={20} textAlign="center" bg="gray.200">
-     
      
     <Box
       bg="blue.800"
@@ -179,6 +179,7 @@ const Home = () => {
         )}
       </AnimatePresence>
     </Flex> 
+    <ForumApp/>
 
   
  <Container

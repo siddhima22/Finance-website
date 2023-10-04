@@ -71,7 +71,9 @@ router.post(
 );
 
 // ROUTE 3: Get all the posts using: GET "/api/forum/getallposts". Login required
-router.get('/getallposts', fetchuser, async (req, res) => {
+router.get('/getallposts',
+//  fetchuser,
+  async (req, res) => {
   try {
     const posts = await Post.find().populate('comments');
     res.json(posts);

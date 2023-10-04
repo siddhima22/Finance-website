@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Heading, Text, VStack,Container } from "@chakra-ui/react";
 import { Navigate, useSearchParams } from "react-router-dom";
-import DocCard from "../components/DocCard"
 export default function About() {
   return (
     <>

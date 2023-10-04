@@ -1,74 +1,80 @@
-import React, { useState } from 'react';
-import { Box, VStack, Button, Input, Text, IconButton, Card } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  Box,
+  VStack,
+  Button,
+  Input,
+  Text,
+  IconButton,
+  Card,
+  Spinner,
+} from '@chakra-ui/react';
 import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import Post from './Post';
 
 function ForumApp() {
-  // Dummy data for posts
-  const [posts, setPosts] = useState([
-      {
-        id: 1,
-        title: 'First Post',
-        content: 'This is the content of the first post.',
-        likes: 0,
-        dislikes: 0,
-        comments: [
-          {
-            id: 1,
-            text: 'Comment 1 on First Post',
-            likes: 0,
-            dislikes: 0,
-            childComments: [
-              { id: 4, text: 'Reply to Comment 1', likes: 0, dislikes: 0, childComments: [] },
-            ],
-          },
-          {
-            id: 2,
-            text: 'Comment 2 on First Post',
-            likes: 0,
-            dislikes: 0,
-            childComments: [
-              {
-                id: 5,
-                text: 'Reply to Comment 2',
-                likes: 0,
-                dislikes: 0,
-                childComments: [
-                  { id: 7, text: 'Reply to Reply to Comment Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et voluptas nostrum voluptates ducimus libero amet labore. Iste rem quia enim laborum, delectus obcaecati fugit. Odit beatae inventore reprehenderit! Facilis a explicabo velit soluta illo delectus aliquam quia provident recusandae magnam. 2', likes: 0, dislikes: 0, childComments: [
-                    { id: 7, text: 'Reply to Reply to Comment Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et voluptas nostrum voluptates ducimus libero amet labore. Iste rem quia enim laborum, delectus obcaecati fugit. Odit beatae inventore reprehenderit! Facilis a explicabo velit soluta illo delectus aliquam quia provident recusandae magnam. 2', likes: 0, dislikes: 0, childComments: [
-                  { id: 7, text: 'Reply to Reply to Comment Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et voluptas nostrum voluptates ducimus libero amet labore. Iste rem quia enim laborum, delectus obcaecati fugit. Odit beatae inventore reprehenderit! Facilis a explicabo velit soluta illo delectus aliquam quia provident recusandae magnam. 2', likes: 0, dislikes: 0, childComments: [] },
-                ] },
-                  ] },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: 'Second Post',
-        content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, quisquam. Unde, dolore corrupti reprehenderit laudantium vero repudiandae, perferendis nihil id, vel consectetur saepe harum! Consequuntur eaque voluptate eligendi illo alias ipsa atque. In officia aperiam aliquid ad eos aliquam eligendi doloribus necessitatibus cum illo consequuntur minus commodi error accusamus animi hic deleniti nostrum veritatis reiciendis, nulla adipisci! Explicabo odio laboriosam architecto dolor corporis, voluptatibus amet molestias qui itaque nam! Impedit ducimus consequuntur vel dolorum autem, maxime deleniti commodi odit adipisci dolore corporis quasi itaque id fuga reiciendis corrupti in a. Commodi voluptates optio impedit nulla molestias, consectetur laborum id, ducimus ad quibusdam ab expedita eum fugit perspiciatis atque temporibus aliquid voluptate voluptatem perferendis! Laboriosam, rem labore. Quae in praesentium nesciunt. Eaque voluptas qui, a alias velit perferendis quos iste veritatis illo quidem quisquam tempore optio ad beatae nihil commodi laboriosam dolore, consequuntur laudantium? Ex, ea. Delectus veritatis magnam, amet deserunt consectetur, eum aperiam omnis maiores odit modi et eveniet, vel error similique explicabo aliquam eaque esse sequi possimus sed maxime iure! Quo quod ipsum assumenda beatae quibusdam, odit dicta ex repudiandae voluptatibus architecto sunt. Dolorum volupt https://chat.openai.com/c/a04b006e-9574-4858-91c8-2fc5b33b763b ates adipisci officiis aut debitis, enim eaque accusantium labohttps://chat.openai.com/c/a04b006e-9574-4858-91c8-2fc5b33b763b rum voluptatibus https://chat.openai.com/c/a04b006e-9574-4858-91c8-2fc5b33b763b inventore pariatur voluptate eum maiores. This is the content of https://rrr the second post. https://chat.openai.com/c/a04b006e-9574-4858-91c8-2fc5b33b763b',
-        likes: 0,
-        dislikes: 0,
-        comments: [
-          { id: 3, text: 'Comment 3 on Second Post', likes: 0, dislikes: 0, childComments: [] },
-        ],
-      },
-    ]);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [newPost, setNewPost] = useState({ title: '', content: '' }); // State to store the new post data
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/forum/getallposts');
+        setPosts(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to handle creating a new post
+  const handleCreatePost = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/forum/createpost', newPost); // Replace with your API URL
+      setPosts([...posts, response.data]); // Add the new post to the existing posts
+      setNewPost({ title: '', content: '' }); // Clear the form
+      console.log()
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <Card>
       <Box p={4}>
         <VStack spacing={4} align="stretch">
           <Button colorScheme="teal">Create Post</Button>
-          <Input placeholder="Search..." />
-          {posts.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
+          {/* Input fields for creating a new post */}
+          <Input
+            placeholder="Title"
+            value={newPost.title}
+            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+          />
+          <Input
+            placeholder="Content"
+            value={newPost.content}
+            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+          />
+          <Button colorScheme="teal" onClick={handleCreatePost}>Submit Post</Button>
+
+          {loading ? (
+            <Spinner size="xl" />
+          ) : (
+            <Card>
+              {posts.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </Card>
+          )}
         </VStack>
       </Box>
-      </Card>
+    </Card>
   );
 }
 

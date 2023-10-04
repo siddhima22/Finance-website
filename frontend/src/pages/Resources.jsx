@@ -96,7 +96,7 @@ const ResourcesPage = () => {
           <Box key={resource.id}>
             <iframe title={resource.title} width="100%" height="200" src={resource.link} frameBorder="0" allowFullScreen />
             <p>{resource.title}</p>
-            <img src={resource.image} alt={resource.title} />
+            {/* <img src={resource.image} alt={resource.title} /> */}
           </Box>
         ))}
       </Carousel>
