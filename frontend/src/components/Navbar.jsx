@@ -13,6 +13,7 @@ import {
   IconButton,
   useDisclosure
 } from "@chakra-ui/react";
+import{motion}from "framer-motion"
 // import { AddIcon, MinusIcon } from "@chakra-ui/icons"; // Import the Chakra UI icons you want to use
 
 const Navbar = () => {
@@ -53,7 +54,8 @@ const Navbar = () => {
   return (
     <Box
       as="nav"
-      bg="green.200"
+      bg="blue.500"
+      opacity={0.9}
       p={4}
       position={isSticky ? 'fixed' : 'relative'}
 left={0}
@@ -73,13 +75,18 @@ left={0}
         align="center"
 
       >
+        <motion.div
+             initial={{ opacity: 0, y: 20 }} 
+             animate={{ opacity: 1, y: 0, scale:1.5 }}   
+             transition={{ duration: 1 }} >
         <Heading as="span" fontWeight="bold" fontSize="xl"
         //  as="h1" 
          size="lg" 
          color="black"
           textAlign="left">
-          SkillSetGo
+          CareerCompass
         </Heading>
+        </motion.div>
         <Spacer />
 
 
@@ -102,13 +109,37 @@ left={0}
         >
           {/* Navigation links */}
           {/* <Box borderRight="1px solid" p={1} mr={4}><NavLink to="/">Home</NavLink></Box> */}
-          <Box mr={4}><NavLink to="/">Home</NavLink></Box>
-          <Box mr={4}><NavLink to="/about">About</NavLink></Box>
-          <Box mr={4}><NavLink to="/help">Help</NavLink></Box>
-          <Box mr={4}><NavLink to="/doctors">Doctors Near Me</NavLink></Box>
-          <Box mr={4}><NavLink to="/reports">Reports</NavLink></Box>
-          <Box mr={4}><NavLink to="/bookappointment">Get Diagnosed</NavLink></Box>
-        </Box>
+          <motion.Box  whileHover={{  color: 'white',y: -10, }} 
+          transition= {{ duration: 0.3,}}
+           initial={{  color: 'black',y: 0,}}
+          mr={4}><NavLink to="/">Home</NavLink></motion.Box>
+          <Box width={4}></Box>
+          <motion.Box whileHover={{  color: 'white',y: -10, }} 
+            transition= {{ duration: 0.3,}}
+           initial={{  color: 'black',y: 0,}}
+           mr={4}><NavLink to="/about">About</NavLink></motion.Box>
+               <Box width={4}></Box>
+          <motion.Box whileHover={{  color: 'white',y: -10, }}
+              transition= {{ duration: 0.3,}}
+             initial={{  color: 'black',y: 0,}}
+            mr={4}><NavLink to="/help">Help</NavLink></motion.Box>
+                <Box width={4}></Box>
+          <motion.Box whileHover={{  color: 'white',y: -10, }} 
+            transition= {{ duration: 0.3,}}
+           initial={{  color: 'black',y: 0,}}
+           mr={4}><NavLink to="/doctors">Contact Us</NavLink></motion.Box>
+                   <Box width={4}></Box>
+          <motion.Box whileHover={{  color: 'white',y: -10, }} transition= {{ duration: 0.3,}}
+           initial={{  color: 'black',y: 0,}}
+            mr={4}><NavLink to="/bookappointment">Resource Library</NavLink></motion.Box>
+        </Box>  
+          <Box width={4}></Box>
+          <motion.Box whileHover={{  color: 'white',y: -10, }} 
+             transition= {{ duration: 0.3,}}
+             initial={{  color: 'black',y: 0,}}
+            mr={4}><NavLink to="/reports">Reports</NavLink></motion.Box>
+        
+        <Box width={4}></Box>
 
 
         {/* <Button
@@ -128,7 +159,7 @@ left={0}
       </Button> */}
         {/* <Spacer /> */}
         <NavLink to="/authenticate">
-        <Button colorScheme="green">Login</Button>
+        <Button colorScheme="blue">Login</Button>
         </NavLink>
       </Flex>
     </Box>
