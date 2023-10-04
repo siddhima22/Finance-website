@@ -17,7 +17,7 @@ import {
 import { CheckIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import ReviewPage from "../components/ReviewPage ";
-
+import ForumApp from "../components/ForumApp"
 // import Carousel from "../components/Carousel";
 
 const Home = () => {
@@ -94,7 +94,7 @@ const Home = () => {
     </Box>
       <Box>
       
-
+<ForumApp/>
       {/* <Heading as="h2" size="xl" mb={4}>
         Options
       </Heading>
