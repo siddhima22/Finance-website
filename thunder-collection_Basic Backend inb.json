@@ -1,0 +1,331 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Basic Backend inb",
+    "dateExported": "2023-10-04T10:31:22.708Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Authentication",
+            "containerId": "",
+            "created": "2023-01-23T15:26:28.290Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "dce388c1-1049-4b9f-b26a-d791e8bffbe8",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Create a New User",
+            "url": "localhost:5000/api/auth/createuser",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-01-23T15:26:57.694Z",
+            "modified": "2023-10-04T09:59:57.533Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"siddhimade\",\n  \"email\":\"siddhimade@gmail.com\",\n  \"password\":\"butterflyLOL\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ae1af7a8-cdb4-4151-9cbf-0bcbb7808d79",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Create a comment",
+            "url": "localhost:5000/api/forum/comment/651d37b71fc51be026d97ffe",
+            "method": "POST",
+            "sortNum": 21250,
+            "created": "2023-10-04T10:25:24.534Z",
+            "modified": "2023-10-04T10:28:15.008Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxZDM3OWQxZmM1MWJlMDI2ZDk3ZmZjIn0sImlhdCI6MTY5NjQxMzU5N30.Ab4AR1J04DbXx-rl3II3iz9d9N-Zz2T7hP-P1G97MBk"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"text\": \"This is a sample comment for testing.\"\r\n}\r\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "01293c73-dced-49f7-965c-1376fb837e99",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Post Create",
+            "url": "localhost:5000/api/forum/createpost",
+            "method": "POST",
+            "sortNum": 25000,
+            "created": "2023-10-04T09:07:26.115Z",
+            "modified": "2023-10-04T10:00:23.527Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxZDM3OWQxZmM1MWJlMDI2ZDk3ZmZjIn0sImlhdCI6MTY5NjQxMzU5N30.Ab4AR1J04DbXx-rl3II3iz9d9N-Zz2T7hP-P1G97MBk"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Dummy Post Title\",\n  \"content\": \"This is the content of the dummy post. You can add any text or details here.\"\n}\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ec1ea8a1-8572-4fb1-9139-4bb76fb1adc8",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Login",
+            "url": "localhost:5000/api/auth/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-01-24T18:09:29.205Z",
+            "modified": "2023-09-09T15:48:52.399Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"ritojnanm1@gmail.com\",\n  \"password\":\"1234567890\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "899652ca-63c8-465c-9763-cd37abffe39b",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Fetch all Notes",
+            "url": "localhost:5000/api/notes/fetchallnotes",
+            "method": "GET",
+            "sortNum": 35000,
+            "created": "2023-08-24T15:31:11.548Z",
+            "modified": "2023-08-24T15:32:54.807Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGMzNzgxYWIzOTQ0NDI5M2FkNjhmIn0sImlhdCI6MTY5Mjg5MTE0OH0.KVTn-H-8t72i2oxK9RETsW01R1VXW3RfE-kUnHwtObQ"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "237845f7-31bd-46d5-8aa9-f1c166b71a3c",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Fetch all Notes Copy",
+            "url": "localhost:5000/api/notes/fetchallnotes",
+            "method": "GET",
+            "sortNum": 37500,
+            "created": "2023-08-24T15:31:15.031Z",
+            "modified": "2023-08-24T15:31:15.031Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGMzNzgxYWIzOTQ0NDI5M2FkNjhmIn0sImlhdCI6MTY3NDY2MjI2OH0.rF3R3_0uHQPCBZ1RaIclroSfIJG5ThBOX2wQ3bgT3xQ"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "249ba96f-515c-41c2-99cf-14edae6f8373",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Update existing Note",
+            "url": "localhost:5000/api/notes/updatenote/63d14ffcfe1c7c00af4918f3",
+            "method": "PUT",
+            "sortNum": 38750,
+            "created": "2023-08-24T15:31:18.190Z",
+            "modified": "2023-08-24T15:31:18.190Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGMzNzgxYWIzOTQ0NDI5M2FkNjhmIn0sImlhdCI6MTY3NDY2MjI2OH0.rF3R3_0uHQPCBZ1RaIclroSfIJG5ThBOX2wQ3bgT3xQ"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"wooooooooooooooooo\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "32590dff-3461-4bf7-b252-ecfe7d04c419",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Delete a Note",
+            "url": "localhost:5000/api/notes/deletenote/63d17004cec237ca42fa6aa9",
+            "method": "DELETE",
+            "sortNum": 39375,
+            "created": "2023-08-24T15:31:20.728Z",
+            "modified": "2023-08-24T15:31:20.728Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI9NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkMGMzNzgxYWIzOTQ0NDI5M2FkNjhmIn0sImlhdCI6MTY3NDY2MjI2OH0.rF3R3_0uHQPCBZ1RaIclroSfIJG5ThBOX2wQ3bgT3xQ"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2db6b4c4-2b96-42f5-a36e-311139911f05",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Get User Details",
+            "url": "localhost:5000/api/auth/getuser",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-01-25T05:37:26.108Z",
+            "modified": "2023-03-22T16:33:26.662Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQxYjJkYWY1ZDEyNjdkNmY4OWQxYzUwIn0sImlhdCI6MTY3OTUwMjc3N30.5ijhm-2BCCW5oM_4_j64A5OGvrDBltUNcMF0VY0Yw1U"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "502c4da0-06e8-4570-b323-a893a10768a9",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Create a new Note",
+            "url": "localhost:5000/api/notes/addnote",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-08-24T15:31:23.018Z",
+            "modified": "2023-08-24T15:31:23.018Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQxYjM0NGVkZDNiOTMzNDBjMjBjODljIn0sImlhdCI6MTY3OTUwNDQ2Mn0.ivscQPxSowZVGRL30uuH-ymIAcoASmdJOS-FZHBV9mA"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Second Story\",\n  \"description\": \"I was far from222222222 the drogon's cave\",\n  \"tag\": \"dragon\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "eacea7fc-4970-444a-9c9d-3b18f60b1300",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Chat response",
+            "url": "localhost:5000/api/chat/send",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-09-10T14:45:35.972Z",
+            "modified": "2023-09-10T15:22:23.847Z",
+            "headers": [
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmYzkyY2RkNWYzMWZiNzM3YmFhMGY1In0sImlhdCI6MTY5NDM1OTMxMH0.LLzmdL55QxNKEBCvSvk7yF_jXaKRq3sK9PtA4WUL-Ks"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\"message\":\"hi doing what growling\"}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fe844057-4bdf-4cb7-9f9a-a02bf9eb9a9c",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Chatbot",
+            "url": "localhost:5000/api/chatbot/ask",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-09-23T16:23:07.435Z",
+            "modified": "2023-10-01T04:49:10.411Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"query\":\"what are the features you have?\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "cd5e7f75-6fd8-4981-8d0e-c7663335d6b3",
+            "colId": "bbf0c0e7-d2f6-4f34-9260-cdaccb8989cf",
+            "containerId": "dcd08fa9-dd8d-4ea9-ae3d-549f6c377d27",
+            "name": "Get post",
+            "url": "localhost:5000/api/forum/getallposts",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-10-04T10:20:51.966Z",
+            "modified": "2023-10-04T10:23:32.154Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxZDM3OWQxZmM1MWJlMDI2ZDk3ZmZjIn0sImlhdCI6MTY5NjQxMzU5N30.Ab4AR1J04DbXx-rl3II3iz9d9N-Zz2T7hP-P1G97MBk"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
 });
 
 server.listen(port, () => {
-  console.log(`MeSaynger backend listening at http://localhost:${port}`);
+  console.log(`CareerCompass backend listening at http://localhost:${port}`);
 });
 
 
@@ -92,7 +92,7 @@ app.use('/api/notes', require('./routes/notes'))
 
 
 app.listen(port, () => {
-  console.log(`MeSaynger backend listening at http://localhost:${port}`)
+  console.log(`CareerCompass backend listening at http://localhost:${port}`)
 })
 
 

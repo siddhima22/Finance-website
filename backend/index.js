@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('uploads'))
 // app.use('/public', express.static('public'));
-// app.use(express.static('../MeSaynger/dist'));
+// app.use(express.static('../CareerCompass/dist'));
 
 app.get('/square/:number', (req, res) => {
   const { number } = req.params;
@@ -49,6 +49,7 @@ app.get('/square/:number', (req, res) => {
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/notes', require('./routes/notes'))
 app.use('/api/images', require('./routes/images'))
+app.use('/api/forum', require('./routes/forum'))
 // app.use('/api/chatbot', require('./routes/chatbot'))
 
 
@@ -74,5 +75,5 @@ io.on("connection",(socket)=>{
 })
 
 server.listen(port, () => {
-  console.log(`MeSaynger backend listening at http://localhost:${port}`)
+  console.log(`CareerCompass backend listening at http://localhost:${port}`)
 })
