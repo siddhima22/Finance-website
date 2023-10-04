@@ -113,7 +113,7 @@ const Signup = () => {
 
   return (
     <Box
-      bgImage="url('/background.png')" // Replace with your image path
+      bgImage="https://thumbs.dreamstime.com/z/searching-career-theme-man-city-background-searching-career-theme-man-blurred-city-background-170331456.jpg" // Replace with your image path
       bgSize="cover"
       bgPosition="center"
       h="100vh"
@@ -165,7 +165,7 @@ const Signup = () => {
                     />
                   </FormControl>
                   <Button
-                    colorScheme="green"
+                    colorScheme="blue"
                     type="submit"
                     onClick={handleSignup}
                     isLoading={isLoading}
@@ -210,7 +210,7 @@ const Signup = () => {
                     />
                   </FormControl>
                   <Button
-                    colorScheme="green"
+                    colorScheme="blue"
                     type="submit"
                     onClick={handleLogin}
                     isLoading={isLoading}
