@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-import { VStack, Text, IconButton, HStack,Avatar } from '@chakra-ui/react';
-import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Heading,
+  Text,
+  IconButton,
+  HStack,
+  Avatar,
+  Link,
+} from '@chakra-ui/react';
+import { ArrowUpIcon, ArrowDownIcon, LinkIcon } from '@chakra-ui/icons';
 import Comment from './Comment';
 
 function Post({ post }) {
@@ -16,32 +24,35 @@ function Post({ post }) {
   };
 
   return (
-    <VStack p={4} borderWidth="1px" borderRadius="md" align="start">
-    <HStack spacing={4} align="center">
+    <Box
+      borderWidth="1px"
+      borderRadius="md"
+      padding="1rem"
+      maxW={{ base: '100%', md: '600px' }}
+    >
       <Avatar size="sm" src="/path-to-post-avatar.jpg" alt="Post Author" />
-      <Text fontWeight="bold" fontSize={{ base: 'xl', md: '2xl' }}>
+      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }}>
         {post.title}
-      </Text>
-    </HStack>
-    <Text fontSize={{ base: 'sm', md: 'md' }} align={'left'}>{post.content}</Text>
-    <HStack spacing={2}>
-      <IconButton
-        aria-label="Like"
-        icon={<ArrowUpIcon />}
-        onClick={handleLike}
-      />
-      <span>{likes}</span>
-      <IconButton
-        aria-label="Dislike"
-        icon={<ArrowDownIcon />}
-        onClick={handleDislike}
-      />
-      <span>{dislikes}</span>
-    </HStack>
-    {post.comments.map((comment) => (
-      <Comment key={comment.id} comment={comment} />
-    ))}
-  </VStack>
+      </Heading>
+      <Text fontSize={{ base: 'sm', md: 'md' }}>{post.content}</Text>
+      <HStack spacing={2}>
+        <IconButton
+          aria-label="Like"
+          icon={<ArrowUpIcon />}
+          onClick={handleLike}
+        />
+        <span>{likes}</span>
+        <IconButton
+          aria-label="Dislike"
+          icon={<ArrowDownIcon />}
+          onClick={handleDislike}
+        />
+        <span>{dislikes}</span>
+      </HStack>
+      {post.comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
+    </Box>
   );
 }
 

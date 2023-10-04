@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import {Avatar, Text, IconButton, HStack, Box, Button } from '@chakra-ui/react';
-import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Heading,
+  Text,
+  IconButton,
+  HStack,
+  Avatar,
+  Button,
+  Link,
+} from '@chakra-ui/react';
+import { ArrowUpIcon, ArrowDownIcon, LinkIcon } from '@chakra-ui/icons';
 
 function Comment({ comment }) {
   const [likes, setLikes] = useState(comment.likes);
@@ -23,16 +32,16 @@ function Comment({ comment }) {
 
   return (
     <Box
-      style={comment.childComments.length > 0 ? childCommentsStyle : null}
       borderWidth="1px"
       borderRadius="md"
       padding="1rem"
+      maxW={{ base: '100%', md: '600px' }}
     >
       <HStack spacing={4} align="center">
         <Avatar size="sm" src="/path-to-comment-avatar.jpg" alt="Comment Author" />
-        <Text fontSize={{ base: 'sm', md: 'md' }} align={'left'}>
+        <Heading as="h3" fontSize={{ base: 'sm', md: 'md' }}>
           {comment.text}
-        </Text>
+        </Heading>
       </HStack>
       <HStack spacing={2} mt={2} align="center">
         <IconButton
