@@ -10,18 +10,31 @@ import {
   Card,
   Spinner,
 } from '@chakra-ui/react';
-import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import Post from './Post';
-
+import ReqMak from './ReqMak'
 function ForumApp() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', content: '' }); // State to store the new post data
+  const [newPost, setNewPost] = useState({ title: '', content: '' });
+  const [authToken, setAuthToken] = useState(localStorage.getItem('auth-token'));
 
   useEffect(() => {
+    // Function to fetch data using Axios
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/forum/getallposts');
+        const axiosConfig = {
+          headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            'auth-token': authToken,
+          },
+        };
+
+        const response = await axios.get(
+          'http://localhost:5000/api/forum/getallposts',
+          axiosConfig
+        );
+
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -31,15 +44,26 @@ function ForumApp() {
     };
 
     fetchData();
-  }, []);
+  }, [authToken]);
 
-  // Function to handle creating a new post
   const handleCreatePost = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/forum/createpost', newPost); // Replace with your API URL
-      setPosts([...posts, response.data]); // Add the new post to the existing posts
-      setNewPost({ title: '', content: '' }); // Clear the form
-      console.log()
+      const axiosConfig = {
+        headers: {
+          Accept: '*/*',
+          'Content-Type': 'application/json',
+          'auth-token': authToken,
+        },
+      };
+
+      const response = await axios.post(
+        'http://localhost:5000/api/forum/createpost',
+        newPost,
+        axiosConfig
+      );
+
+      setPosts([...posts, response.data]);
+      setNewPost({ title: '', content: '' });
     } catch (error) {
       console.error('Error:', error);
     }
@@ -48,21 +72,25 @@ function ForumApp() {
   return (
     <Card>
       <Box p={4}>
+        <ReqMak/>
         <VStack spacing={4} align="stretch">
-          <Button colorScheme="teal">Create Post</Button>
-          {/* Input fields for creating a new post */}
           <Input
             placeholder="Title"
             value={newPost.title}
-            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+            onChange={(e) =>
+              setNewPost({ ...newPost, title: e.target.value })
+            }
           />
           <Input
             placeholder="Content"
             value={newPost.content}
-            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+            onChange={(e) =>
+              setNewPost({ ...newPost, content: e.target.value })
+            }
           />
-          <Button colorScheme="teal" onClick={handleCreatePost}>Submit Post</Button>
-
+          <Button colorScheme="teal" onClick={handleCreatePost}>
+            Submit Post
+          </Button>
           {loading ? (
             <Spinner size="xl" />
           ) : (
