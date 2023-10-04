@@ -65,7 +65,7 @@ export default function OverviewPage() {
       <Tr>
         <Th>Name of users</Th>
         <Th>Email id</Th>
-        <Th isNumeric>Number of purchases</Th>
+        <Th isNumeric>Apititude Tests Given</Th>
       </Tr>
     </Thead>
     <Tbody>

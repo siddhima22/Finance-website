@@ -16,6 +16,8 @@ import NotFound from './pages/NotFound.jsx'
 import Careers, { careersLoader } from './pages/careers/Careers'
 import CareerDetails, { careerDetailsLoader } from "./pages/careers/CareerDetails"
 import CareersError from './pages/careers/CareersError'
+import Aptitude from './pages/Aptitude.jsx'
+
 
 // layouts
 import RootLayout from './layouts/RootLayout'
@@ -37,10 +39,12 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       
-
+      <Route path="aptitude" element={<Aptitude />} />
       <Route index element={<Dashboard />} />
       <Route path="reviews" element={<Reviews/>} />
       <Route path="profile" element={<Profile />} />
+      //Aptitude
+      <Route path="aptitude" element={<Aptitude />} />
       
       <Route path="calendar" element={<Calendar />} />
       
