@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 import { Box, Select, Image, Button, Wrap, WrapItem } from "@chakra-ui/react";
 import Carousel from "react-multi-carousel";
@@ -92,30 +89,64 @@ const ResourcesPage = () => {
       </Select>
 
       <Carousel responsive={responsive}>
-        {resourcesData[selectedCategory].map((resource) => (
-          <Box key={resource.id}>
-            <iframe title={resource.title} width="100%" height="200" src={resource.link} frameBorder="0" allowFullScreen />
-            <p>{resource.title}</p>
-            {/* <img src={resource.image} alt={resource.title} /> */}
-          </Box>
-        ))}
-      </Carousel>
+  {resourcesData[selectedCategory].map((resource) => (
+    <Box key={resource.id}>
+      {resource.id === 1 && (
+        <iframe
+          title={resource.title}
+          width="100%"
+          height="215"
+          src="https://www.youtube.com/embed/zOjov-2OZ0E?si=SUp69qvV1vV-diKJ" 
+          frameBorder="0"
+          allowFullScreen
+        />
+      )}
+      {resource.id === 2 && (
+        <iframe
+          padding="20px"
+          width="460"
+          height="215"
+          src="https://www.youtube.com/embed/Cu3R5it4cQs?si=P34RqP3PRzfQrKXy" 
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+         
+      )}
+      {resource.id === 3 && (
+        <iframe
+          width="440"
+          height="215"
+          src="https://www.youtube.com/embed/Ojqdty-Oh1M?si=nzyd572jg1RDiKG3" 
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      )}
+      <p>{resource.title}</p>
+    </Box>
+  ))}
+</Carousel>
+
     </Box>
     <Box height={10}>
 
     </Box>
       </Box>
-
+  
       <Wrap spacing={4} p={4}>
         {imagesAndButtons.map((item) => (
           <WrapItem key={item.id}>
             <Box padding={4}>
               <Image src={item.imageSrc} alt="Data Structure Image" height={200} width={260} />
+              <Box width={200}  alignContent={"center"}>
               <Button colorScheme="blue" _hover={{ backgroundColor: "lightblue" }}>
                 <a href={item.downloadLink} download>
                   Download
                 </a>
-              </Button>
+              </Button></Box>
             </Box>
           </WrapItem>
         ))}
