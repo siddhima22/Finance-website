@@ -1,120 +1,88 @@
-import { Box, SimpleGrid, Text, Heading ,Stat,StatHelpText,StatArrow,StatNumber,StatLabel} from "@chakra-ui/react";
-import {Table,Thead,Tbody,Tfoot,Tr,Th,Td,TableCaption,TableContainer,} from '@chakra-ui/react';
-import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons'
+import React from 'react';
+import {
+  Box,
+  Heading,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Flex,
+  Spacer,
+  SimpleGrid,
+  Center,
+  Progress,
+} from '@chakra-ui/react';
 
- 
-export default function OverviewPage() {
+const StudentProfile = () => {
   return (
-    <div>
-      <SimpleGrid p="20px" columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-  
-        <Box
-          bg="white"
-          p="4"
-          boxShadow="md"
-          borderRadius="md" 
-        >
-          <Text fontSize="lg" fontWeight="bold">Total Revenue</Text>
-          <Text fontSize="2xl">$1,234,567</Text>
-          <CheckCircleIcon color={"blue.400"}></CheckCircleIcon>
-          
-        </Box>
-        <Box
-          bg="white"
-          p="4"
-          boxShadow="md"
-          borderRadius="md" 
-        >
-        <Stat>
-         <StatLabel>Projected Sales</StatLabel>
-            <StatNumber>345,670</StatNumber>
-            <StatHelpText>
-          <StatArrow type='increase' />
-             23.36%
-          </StatHelpText>
-        </Stat>
-       </Box>
-
-
-    
-        <Box
-          bg="white"
-          p="4"
-          boxShadow="md"
-          borderRadius="md" 
-        >
-          <Heading size="md" mb="4">Summary</Heading>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-        </Box>
-
-        <Box
-          bg="white"
-          p="4"
-          boxShadow="md"
-          borderRadius="md" 
-        >
-          <Text fontSize="lg" fontWeight="bold">Downloads</Text>
-          <Text fontSize="2xl">3,456</Text>
-          <DownloadIcon color={"blue.400"}></DownloadIcon>
-        </Box>
-      </SimpleGrid>
-      <TableContainer>
-  <Table variant='striped' colorScheme='blue'>
-    
-    <Thead>
-      <Tr>
-        <Th>Name of users</Th>
-        <Th>Email id</Th>
-        <Th isNumeric>Apititude Tests Given</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      <Tr>
-        <Td>simar chawla</Td>
-        <Td>sim@gmail.com</Td>
-        <Td isNumeric>16</Td>
-      </Tr>
-      <Tr>
-        <Td>vishal mishra</Td>
-        <Td>vish@gmail.com</Td>
-        <Td isNumeric>5</Td>
-      </Tr>
-      <Tr>
-        <Td>diana raisinghani</Td>
-        <Td>dino@gmail.com</Td>
-        <Td isNumeric>9</Td>
-      </Tr>
-    
- 
-      <Tr>
-        <Td>aastha rohra</Td>
-        <Td>aas@gmail.com</Td>
-        <Td isNumeric>20</Td>
-      </Tr>
-      <Tr>
-        <Td>priyansh hemani</Td>
-        <Td>pri@gmail.com</Td>
-        <Td isNumeric>9</Td>
-      </Tr>
-      <Tr>
-        <Td>eesha karnani</Td>
-        <Td>eesh@gmail.com</Td>
-        <Td isNumeric>25</Td>
-      </Tr>
-      <Tr>
-        <Td>krishna raheja</Td>
-        <Td>kri@gmail.com</Td>
-        <Td isNumeric>6</Td>
-      </Tr>
-      <Tr>
-        <Td>siddhima de</Td>
-        <Td>sid@gmail.com</Td>
-        <Td isNumeric>7</Td>
-      </Tr>
-    </Tbody>
-  </Table>
-</TableContainer>
+    <Box p={8}>
+      <Heading mb={4}>Welcome, Student!</Heading>
       
-    </div>
+      {/* Student Career Information */}
+      <Box mb={8}>
+        <Heading size="md">Career Information</Heading>
+        <Text fontSize="lg">Course: Computer Science</Text>
+        <Text fontSize="lg">GPA: 3.8</Text>
+      </Box>
+
+      {/* Vertical Roadmap */}
+      <Box mb={8}>
+        <Heading size="md">Roadmap</Heading>
+        {/* Use appropriate Chakra UI components to create a vertical roadmap */}
+      </Box>
+
+      {/* Important Dates */}
+      <Box mb={8}>
+        <Heading size="md">Important Dates</Heading>
+        <Accordion allowMultiple>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  Exam Dates
+                </Box>
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>Upcoming exam dates go here.</AccordionPanel>
+          </AccordionItem>
+          {/* Add more AccordionItems for other important dates */}
+        </Accordion>
+      </Box>
+
+      {/* Tables */}
+      <Box mb={8}>
+        <Heading size="md">Academic Performance</Heading>
+        <Table variant="striped" colorScheme="teal" size="md">
+          <Thead>
+            <Tr>
+              <Th>Subject</Th>
+              <Th>Grade</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>Math</Td>
+              <Td>A</Td>
+            </Tr>
+            {/* Add more rows for other subjects */}
+          </Tbody>
+        </Table>
+      </Box>
+
+      {/* Graphs */}
+      <Box mb={8}>
+        <Heading size="md">Progress Overview</Heading>
+        {/* Use a charting library like Chart.js or D3.js to create graphs */}
+      </Box>
+    </Box>
   );
-}
+};
+
+export default StudentProfile;

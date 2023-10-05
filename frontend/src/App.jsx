@@ -34,6 +34,8 @@ import Profile from "./pages/Profile";
 import Calendar from "./pages/Calendar";
 import ResourcesPage from "./pages/Resources.jsx";
 import ForumApp from "./components/ForumApp";
+import OverviewPage from "./pages/Dashboard";
+import Forum from "./pages/Forum";
 
 
 const router = createBrowserRouter(
@@ -41,13 +43,15 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="dashboard" element={<RootLayoutDash/>}>
+      <Route index element={<OverviewPage />} />
+
         <Route path="aptitude" element={<Aptitude />} />
         <Route path="calendar" element={<Calendar />} />
         <Route path="profile" element={<Profile />} />
       <Route path="aptitude" element={<Aptitude />} />
 
       </Route>
-      <Route path="forum" element={<ForumApp/>}>
+      <Route path="forum" element={<Forum/>}>
         <Route path="create" element={<Aptitude />} />
         <Route path="view" element={<Profile />} />
       </Route>
@@ -61,6 +65,7 @@ const router = createBrowserRouter(
         <Route path="faq" element={<Faq />} />
         <Route path="contact" element={<Contact />} action={contactAction} />
       </Route>
+
       <Route
         path="careers"
         element={<CareersLayout />}

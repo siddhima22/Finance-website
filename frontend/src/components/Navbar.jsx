@@ -73,12 +73,13 @@ const Navbar = () => {
       ><Image height={10} width={10} src="/public/logo1.png" />
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.5 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          animate={{ opacity: 1, y: 2, scale: 1.5, x:40 }}
           transition={{ duration: 1 }}
         >
           
 
-        
+          <NavbarLink to="/">
+
         <Heading as="span" fontWeight="bold" fontSize="xl"
         //  as="h1" 
          size="lg" 
@@ -86,6 +87,7 @@ const Navbar = () => {
           textAlign="left">
           CareerCompass
         </Heading>
+        </NavbarLink>
         </motion.div>
         <Spacer />
 
@@ -108,9 +110,9 @@ const Navbar = () => {
           <NavbarLink to="/">Home</NavbarLink>
           <NavbarLink to="/about">About</NavbarLink>
           <NavbarLink to="/help">Help</NavbarLink>
-          <NavbarLink to="/doctors">Contact Us</NavbarLink>
+          <NavbarLink to="/help/contact">Contact Us</NavbarLink>
           <NavbarLink to="/resources">Resources</NavbarLink>
-        <NavbarLink to="/reports">Reports</NavbarLink>
+        <NavbarLink to="/forum">Forum</NavbarLink>
         </Box>
         <NavLink to="/authenticate">
           <Button colorScheme="whiteAlpha">Login</Button>
