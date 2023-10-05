@@ -70,13 +70,13 @@ const Navbar = () => {
         px={4}
         py={2}
         align="center"
-      >
+      ><Image height={10} width={10} src="/public/logo1.png" />
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.5 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1 }}
         >
-          <Image height={10} width={10} src="/public/logo1.png" />
+          
 
         
         <Heading as="span" fontWeight="bold" fontSize="xl"
