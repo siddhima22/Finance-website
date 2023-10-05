@@ -35,6 +35,7 @@ import Calendar from "./pages/Calendar";
 import ResourcesPage from "./pages/Resources.jsx";
 import ForumApp from "./components/ForumApp";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
