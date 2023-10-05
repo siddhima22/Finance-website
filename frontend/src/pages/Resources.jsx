@@ -27,13 +27,13 @@ const resourcesData = {
       { id: 3, title: "Psychology Video 3", link: "https://example.com/psychology-video3", image: "psychology_image_url_3" },
     ],
     economics: [
-      { id: 1, title: "Economics Video 1", link: "https://example.com/economics-video1", image: "economics_image_url_1" },
-      { id: 2, title: "Economics Video 2", link: "https://example.com/economics-video2", image: "economics_image_url_2" },
-      { id: 3, title: "Economics Video 3", link: "https://example.com/economics-video3", image: "economics_image_url_3" },
+      { id: 1, title: "Economics Video 3", link: "https://example.com/economics-video3", image: "economics_image_url_3" },
+      { id: 2, title: "Economics Video 1", link: "https://example.com/economics-video1", image: "economics_image_url_1" },
+      { id: 3, title: "Economics Video 2", link: "https://example.com/economics-video2", image: "economics_image_url_2" },
     ],
     art: [
-      { id: 1, title: "Economics Video 1", link: "https://example.com/economics-video1", image: "economics_image_url_1" },
-      { id: 2, title: "Economics Video 2", link: "https://example.com/economics-video2", image: "economics_image_url_2" },
+      { id: 1, title: "Economics Video 2", link: "https://example.com/economics-video2", image: "economics_image_url_2" },
+      { id: 2, title: "Economics Video 1", link: "https://example.com/economics-video1", image: "economics_image_url_1" },
       { id: 3, title: "Economics Video 3", link: "https://example.com/economics-video3", image: "economics_image_url_3" },
     ],
     business: [
@@ -90,7 +90,7 @@ const ResourcesPage = () => {
 
       <Carousel responsive={responsive}>
   {resourcesData[selectedCategory].map((resource) => (
-    <Box key={resource.id}>
+    <Box padding={2} key={resource.id}>
       {resource.id === 1 && (
         <iframe
           title={resource.title}

@@ -35,6 +35,7 @@ import Calendar from "./pages/Calendar";
 import ResourcesPage from "./pages/Resources.jsx";
 import ForumApp from "./components/ForumApp";
 import OverviewPage from "./pages/Dashboard";
+import Forum from "./pages/Forum";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,7 +50,7 @@ const router = createBrowserRouter(
       <Route path="aptitude" element={<Aptitude />} />
 
       </Route>
-      <Route path="forum" element={<ForumApp/>}>
+      <Route path="forum" element={<Forum/>}>
         <Route path="create" element={<Aptitude />} />
         <Route path="view" element={<Profile />} />
       </Route>
