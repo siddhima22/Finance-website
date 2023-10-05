@@ -22,6 +22,7 @@ import {
   FormLabel, // Import FormLabel
 } from '@chakra-ui/react';
 
+import { redirect, useNavigate } from 'react-router-dom';
 const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [signupMessage, setSignupMessage] = useState('');
@@ -34,6 +35,12 @@ const Signup = () => {
     loginPassword: '',
   });
 
+  const navigate=useNavigate();
+
+  const loader=async()=>{
+    console.log("fffffffffff")
+    return navigate('/dashboard')
+  }
   const handleSignup = async () => {
     setIsLoading(true);
 
@@ -92,6 +99,7 @@ const Signup = () => {
           setLoginMessage('Login successful!');
           // Save authtoken to localStorage
           localStorage.setItem('authtoken', data.authtoken);
+loader();          
         } else {
           setLoginMessage(data.error || 'Login failed.');
         }

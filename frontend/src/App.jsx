@@ -18,7 +18,7 @@ import CareerDetails, {
 } from "./pages/careers/CareerDetails";
 import CareersError from "./pages/careers/CareersError";
 import Aptitude from "./pages/Aptitude.jsx";
-
+import RootLayoutDash from "./layouts/RootLayoutDash";
 // layouts
 import RootLayout from "./layouts/RootLayout";
 import HelpLayout from "./layouts/HelpLayout";
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
-      <Route path="dashboard" element={<Dashboard />}>
+      <Route path="dashboard" element={<RootLayoutDash/>}>
         <Route path="aptitude" element={<Aptitude />} />
         <Route path="profile" element={<Profile />} />
       </Route>
@@ -54,8 +54,6 @@ const router = createBrowserRouter(
 
       <Route path="about" element={<About />} />
       <Route path="authenticate" element={<Signup />} />
-      <Route path="doctors" element={<Finder />} />
-      <Route path="reports" element={<Dashboard />} />
       <Route path="resources" element={<ResourcesPage />} />
       <Route path="about" element={<About />} />
       <Route path="help" element={<HelpLayout />}>
