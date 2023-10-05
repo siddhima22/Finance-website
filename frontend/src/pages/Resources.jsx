@@ -90,7 +90,7 @@ const ResourcesPage = () => {
 
       <Carousel responsive={responsive}>
   {resourcesData[selectedCategory].map((resource) => (
-    <Box key={resource.id}>
+    <Box padding={2}  key={resource.id}>
       {resource.id === 1 && (
         <iframe
           title={resource.title}
