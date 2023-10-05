@@ -13,8 +13,6 @@ import Navbar from "../components/Navbar";
 
 export default function RootLayout() {
   return (
-
-    
     <Grid templateColumns="repeat(6, 1fr)" bg="gray.50">
       
       <GridItem
@@ -26,24 +24,7 @@ export default function RootLayout() {
       >
         
         <VStack align="start" spacing={2} w="100%"> 
-          
-          <Box
-            bg="rgba(255, 255, 255, 0.04)"
-            borderRadius="md"
-            p={2}
-            cursor="pointer"
-            w="100%"
-            _hover={{ bg: "blue.600" }} 
-          >
-            <VStack align="start" spacing={0}>
-              <Text color="white" fontWeight="bold">
-                APP
-              </Text>
-              <Text color="neutral.400" fontSize="sm">
-                NAME
-              </Text>
-            </VStack>
-          </Box>
+         
           <Box w="100%">
             <VStack align="start" spacing={0}>
               <ChakraLink
@@ -62,7 +43,7 @@ export default function RootLayout() {
               </ChakraLink>
               <ChakraLink
                as={Link}
-                to="/dashboard/profile"
+                to="/profile"
                 display="flex"
                 alignItems="center"
                 bg="blue.800"
@@ -75,7 +56,7 @@ export default function RootLayout() {
                 Profile
               </ChakraLink>
               <ChakraLink
-                to="dashboard/graphs"
+                to="/graphs"
                 display="flex"
                 alignItems="center"
                 bg="blue.800"
@@ -102,7 +83,7 @@ export default function RootLayout() {
                 Todo List
               </ChakraLink>
               <ChakraLink
-                to="/dashboard/features"
+                to="/features"
                 display="flex"
                 alignItems="center"
                 bg="blue.800"
@@ -116,7 +97,7 @@ export default function RootLayout() {
               </ChakraLink>
               <ChakraLink
                as={Link}
-                to="/dashboard/calendar"
+                to="/calendar"
                 display="flex"
                 alignItems="center"
                 bg="blue.800"
@@ -130,7 +111,7 @@ export default function RootLayout() {
               </ChakraLink>
               <ChakraLink
                as={Link}
-                to="dashboard/reviews"
+                to="/reviews"
                 display="flex"
                 alignItems="center"
                 bg="blue.800"

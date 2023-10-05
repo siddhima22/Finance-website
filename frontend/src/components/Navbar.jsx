@@ -108,7 +108,7 @@ const Navbar = () => {
           <NavbarLink to="/">Home</NavbarLink>
           <NavbarLink to="/about">About</NavbarLink>
           <NavbarLink to="/help">Help</NavbarLink>
-          <NavbarLink to="/doctors">Contact Us</NavbarLink>
+          <NavbarLink to="/help/contact">Contact Us</NavbarLink>
           <NavbarLink to="/resources">Resources</NavbarLink>
         <NavbarLink to="/reports">Reports</NavbarLink>
         </Box>
