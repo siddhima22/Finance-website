@@ -11,7 +11,7 @@ import {
   Badge,
   Flex,
 } from '@chakra-ui/react';
-import { EmailIcon, PhoneIcon, LocationIcon } from '@chakra-ui/icons';
+import { EmailIcon, PhoneIcon } from '@chakra-ui/icons';
 
 const Profile = () => {
   return (
@@ -52,7 +52,7 @@ const Profile = () => {
             <Text>+91 9820123456</Text>
           </Flex>
           <Flex align="center" mt={2}>
-            <LocationIcon mr={2} />
+            {/* <LocationIcon mr={2} /> */}
             <Text>Mumbai, India</Text>
           </Flex>
         </Box>
