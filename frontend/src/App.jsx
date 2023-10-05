@@ -41,16 +41,16 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="dashboard" element={<RootLayoutDash/>}>
         <Route path="aptitude" element={<Aptitude />} />
+        <Route path="calendar" element={<Calendar />} />
         <Route path="profile" element={<Profile />} />
+      <Route path="aptitude" element={<Aptitude />} />
+
       </Route>
       <Route path="forum" element={<ForumApp/>}>
         <Route path="create" element={<Aptitude />} />
         <Route path="view" element={<Profile />} />
       </Route>
       
-      <Route path="profile" element={<Profile />} />
-      <Route path="aptitude" element={<Aptitude />} />
-      <Route path="calendar" element={<Calendar />} />
 
       <Route path="about" element={<About />} />
       <Route path="authenticate" element={<Signup />} />
