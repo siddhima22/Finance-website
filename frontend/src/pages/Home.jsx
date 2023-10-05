@@ -115,70 +115,7 @@ const Home = () => {
 
     <Box height={20}></Box>
       <Box>
-      <Flex wrap="wrap" justifyContent="space-around">
-      {cardsData.map((item) => (
-        <motion.div
-          key={item.id}
-          layoutId={item.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-          w={['100%', '45%', '30%']} // Adjust width based on screen size
-          m="4"
-          p="4"
-          borderRadius="lg"
-          boxShadow="md"
-          cursor="pointer"
-          onClick={() => setSelectedId(item.id)}
-        >
-          <Box
-            h={['150px', '200px']}
-            bgImage={`url(${item.image})`}
-            bgSize="cover"
-            mb="4"
-            borderRadius="md"
-          />
-          <Text fontSize={['md', 'lg']} fontWeight="bold" mb="2">
-            {item.subtitle}
-          </Text>
-          <Text fontSize={['sm', 'md']} color="gray.600">
-            {item.title}
-          </Text>
-        </motion.div>
-      ))}
-
-      <AnimatePresence>
-        {selectedId && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.3 }}
-            position="fixed"
-            top="50%"
-            left="50%"
-            transform="translate(-50%, -50%)"
-            p="4"
-            borderRadius="lg"
-            boxShadow="lg"
-            bgColor="white"
-          >
-            <Text fontSize={['lg', 'xl']} fontWeight="bold" mb="2">
-              {cardsData[selectedId - 1].subtitle}
-            </Text>
-            <Text fontSize={['md', 'lg']} mb="4" color="gray.600">
-              {cardsData[selectedId - 1].title}
-            </Text>
-            <Text mb="4">{cardsData[selectedId - 1].summary}</Text>
-            <Button colorScheme="blue" onClick={() => setSelectedId(null)}>
-              Close
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Flex> 
+     
     <ForumApp/>
 
   

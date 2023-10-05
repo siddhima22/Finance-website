@@ -20,24 +20,23 @@ const Profile = () => {
         boxShadow="lg"
         bg="white"
       >
+ 
+
         <Avatar
           size="xl"
-          name="Rita Sharma"
-          src="https://via.placeholder.com/150"
+          name="Rito Mukherjee"
+          src= 'https://bit.ly/dan-abramov'
           mx="auto"
         />
         <Heading mt={4} textAlign="center">
-          Rita Sharma
+          Rito Mukherjee
         </Heading>
         <Text mt={2} textAlign="center">
-          Teacher
+        User
         </Text>
         <Divider mt={4} mb={4} />
-        <Text fontSize="xl">About Me</Text>
-        <Text mt={2}>
-          I am an educator in thadomal shahani engineering college with a degree in literature, i teach public 
-          communications and ethics.in my free time i like reading ficition novels and making eye catching oil paintings.
-        </Text>
+        <Text fontSize="xl"></Text>
+       
         <Divider mt={4} mb={4} />
         <Text fontSize="xl">Contact</Text>
         <Text mt={2}>Email: rita@gmail.com</Text>
