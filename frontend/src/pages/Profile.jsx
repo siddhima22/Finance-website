@@ -7,7 +7,11 @@ import {
   Text,
   Button,
   Divider,
+  Tag,
+  Badge,
+  Flex,
 } from '@chakra-ui/react';
+import { EmailIcon, PhoneIcon, LocationIcon } from '@chakra-ui/icons';
 
 const Profile = () => {
   return (
@@ -19,29 +23,39 @@ const Profile = () => {
         borderRadius="lg"
         boxShadow="lg"
         bg="white"
+        textAlign="center"
       >
- 
-
         <Avatar
-          size="xl"
+          size="2xl"
           name="Rito Mukherjee"
-          src= 'https://bit.ly/dan-abramov'
+          src="https://bit.ly/dan-abramov"
           mx="auto"
         />
-        <Heading mt={4} textAlign="center">
-          Rito Mukherjee
-        </Heading>
-        <Text mt={2} textAlign="center">
-        User
-        </Text>
+        <Heading mt={4}>Rito Mukherjee</Heading>
+        <Flex justify="center" align="center" mt={2}>
+          <Tag variant="subtle" colorScheme="green">
+            Premium User
+          </Tag>
+          <Badge ml={2} colorScheme="teal">
+            Verified
+          </Badge>
+        </Flex>
         <Divider mt={4} mb={4} />
-        <Text fontSize="xl"></Text>
-       
-        <Divider mt={4} mb={4} />
-        <Text fontSize="xl">Contact</Text>
-        <Text mt={2}>Email: rita@gmail.com</Text>
-        <Text mt={2}>Phone: +91 9820123456</Text>
-        <Text mt={2}>Locality: Mumbai , India</Text>
+        <Box fontSize={['md', 'lg', 'xl']}>
+          <Text>Contact</Text>
+          <Flex align="center" mt={2}>
+            <EmailIcon mr={2} />
+            <Text>rita@gmail.com</Text>
+          </Flex>
+          <Flex align="center" mt={2}>
+            <PhoneIcon mr={2} />
+            <Text>+91 9820123456</Text>
+          </Flex>
+          <Flex align="center" mt={2}>
+            <LocationIcon mr={2} />
+            <Text>Mumbai, India</Text>
+          </Flex>
+        </Box>
         <Button mt={4} colorScheme="blue">
           Edit Profile
         </Button>
