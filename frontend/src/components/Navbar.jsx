@@ -7,6 +7,7 @@ import {
   Spacer,
   Link,
   Button,
+  Image,
   Heading,
   chakra,
   useMediaQuery,
@@ -74,17 +75,20 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1 }}
         >
-          <Heading
-            as="h2"
-            fontWeight="bold"
-            fontSize="lg"
-            size="lg"
-            color="black"
-            textAlign="left"
-          >
-            CareerCompass
-          </Heading>
-        </motion.div>
+          <Image height={10} width={10} src="/public/logo1.png" />
+
+        <motion.div
+             initial={{ opacity: 0, y: 20 }} 
+             animate={{ opacity: 1, y: 4, x:40,scale:1.5 }}   
+             transition={{ duration: 1 }} >
+        <Heading as="span" fontWeight="bold" fontSize="xl"
+        //  as="h1" 
+         size="lg" 
+         color="black"
+          textAlign="left">
+          CareerCompass
+        </Heading>
+        
         <Spacer />
 
         <Box display={{ base: "block", md: "none" }}>
