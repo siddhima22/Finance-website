@@ -49,6 +49,7 @@ const Navbar = () => {
   }, []);
 
   return (
+    <div>
     <Box
       as="nav"
       bg="blue.500"
@@ -77,10 +78,7 @@ const Navbar = () => {
         >
           <Image height={10} width={10} src="/public/logo1.png" />
 
-        <motion.div
-             initial={{ opacity: 0, y: 20 }} 
-             animate={{ opacity: 1, y: 4, x:40,scale:1.5 }}   
-             transition={{ duration: 1 }} >
+        
         <Heading as="span" fontWeight="bold" fontSize="xl"
         //  as="h1" 
          size="lg" 
@@ -88,7 +86,7 @@ const Navbar = () => {
           textAlign="left">
           CareerCompass
         </Heading>
-        
+        </motion.div>
         <Spacer />
 
         <Box display={{ base: "block", md: "none" }}>
@@ -119,6 +117,8 @@ const Navbar = () => {
         </NavLink>
       </Flex>
     </Box>
+    </div>
+    
   );
 };
 
