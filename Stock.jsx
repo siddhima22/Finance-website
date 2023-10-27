@@ -19,8 +19,14 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-
-import { Line } from "react-chartjs-2";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 const theme = extendTheme({
   styles: {
@@ -36,11 +42,20 @@ const generateRandomDataPoint = (min, max) => {
   return Math.random() * (max - min) + min;
 };
 
+const generateDummyChartData = () => {
+  const dummyData = [];
+  for (let i = 0; i < 30; i++) {
+    dummyData.push({
+      time: `-${30 - i} mins`,
+      price: 150 + generateRandomDataPoint(-15, 15),
+    });
+  }
+  return dummyData.reverse();
+};
+
 const Stock = () => {
   const [balance, setBalance] = useState(10000);
   const [stocks, setStocks] = useState([
-    // your stock data
-    // ... (your stock data here)
     { id: "AAPL", name: "Apple Inc.", price: 150.25 },
     { id: "GOOGL", name: "Alphabet Inc.", price: 2765.45 },
     { id: "MSFT", name: "Microsoft Corporation", price: 305.52 }, 
@@ -56,22 +71,12 @@ const Stock = () => {
     { id: "V", name: "Visa Inc.", price: 250.80 },
     { id: "GS", name: "The Goldman Sachs Group, Inc.", price: 410.35 },
     { id: "DIS", name: "The Walt Disney Company", price: 175.25 }
+   
+    // Add other stock data here
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
-
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Stock Price",
-        data: [],
-        backgroundColor: [],
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 2,
-      },
-    ],
-  });
+  const [chartData, setChartData] = useState(generateDummyChartData());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,21 +87,13 @@ const Stock = () => {
       }));
       setStocks(updatedStocks);
 
-      const newChartData = {
-        labels: [...chartData.labels, new Date().toLocaleTimeString()],
-        datasets: [
-          {
-            ...chartData.datasets[0],
-            data: [...chartData.datasets[0].data, updatedStocks[0].price],
-            backgroundColor: [
-              ...chartData.datasets[0].backgroundColor,
-              updatedStocks[0].price > updatedStocks[0].prevPrice ? "green" : "red",
-            ],
-          },
-        ],
-      };
+      const newPrice = stocks[0].price + generateRandomDataPoint(-15, 15);
+      const updatedChartData = [
+        ...chartData.slice(1),
+        { time: "0 mins", price: newPrice },
+      ];
 
-      setChartData(newChartData);
+      setChartData(updatedChartData);
     }, 10000);
 
     return () => clearInterval(interval);
@@ -120,7 +117,7 @@ const Stock = () => {
         <Text fontSize="2xl" mb={4}>
           Balance: ${balance.toFixed(2)}
         </Text>
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
+        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4} mt={4}>
           {stocks.map((stock) => (
             <Box key={stock.id} p={4} borderWidth="1px" borderRadius="lg" bg="white">
               <Text fontSize="xl" mb={2}>
@@ -140,17 +137,14 @@ const Stock = () => {
                   roundedLeft="full"
                   roundedRight="full"
                 >
-                  <HStack spacing={1} align="center">
                     <Stat>
-                    <StatArrow
-                      type={stock.price > stock.prevPrice ? "increase" : "decrease"}
-                      color={stock.price > stock.prevPrice ? "green.500" : "red.500"}
-                    />
-                    <Text as="span" fontSize="sm" fontWeight="bold">
-                      {(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
-                    </Text>
-                    </Stat>
-                  </HStack>
+                  <StatArrow
+                    type={stock.price > stock.prevPrice ? "increase" : "decrease"}
+                    color={stock.price > stock.prevPrice ? "green.500" : "red.500"}
+                  />
+                  <Text as="span" fontSize="sm" fontWeight="bold">
+                    {(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
+                  </Text></Stat>
                 </Box>
               </HStack>
               <Button
@@ -184,18 +178,25 @@ const Stock = () => {
                 <Text fontSize="xl" mb={2}>
                   {selectedStock.name}
                 </Text>
-                <Stat>
-                  <StatLabel>Price</StatLabel>
-                  <StatNumber>${selectedStock.price.toFixed(2)}</StatNumber>
-                  <StatArrow
-                    type={selectedStock.price > selectedStock.prevPrice ? "increase" : "decrease"}
-                    color={selectedStock.price > selectedStock.prevPrice ? "green.500" : "red.500"}
+                <AreaChart
+                  width={400}
+                  height={200}
+                  data={chartData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="price"
+                    stroke="#8884d8"
+                    fill={(props) =>
+                      props.payload.price > props.payload.prevPrice ? "green" : "red"
+                    }
                   />
-                  <Box as="span" fontSize="sm" fontWeight="bold">
-                    {(((selectedStock.price - selectedStock.prevPrice) / selectedStock.prevPrice) * 100).toFixed(2)}%
-                  </Box>
-                </Stat>
-                <Line data={chartData} />
+                </AreaChart>
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
