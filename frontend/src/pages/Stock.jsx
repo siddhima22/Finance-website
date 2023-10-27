@@ -28,8 +28,11 @@ const generateRandomDataPoint = (min, max) => {
 };
 
 const Stock = () => {
-  const [balance, setBalance] = useState(10000);
-  const [stocks, setStocks] = useState([
+  const [balance, setBalance] = useState(() => Number(localStorage.getItem('balance')) || 10000);
+  const [stocks, setStocks] = useState(() => {
+    const storedValue = localStorage.getItem('objectArray');
+    return storedValue ? JSON.parse(storedValue) :
+[
     // your stock data
     { id: "AAPL", name: "Apple Inc.", price: 150.25 },
     { id: "GOOGL", name: "Alphabet Inc.", price: 2765.45 },
@@ -46,20 +49,8 @@ const Stock = () => {
     { id: "V", name: "Visa Inc.", price: 250.80 },
     { id: "GS", name: "The Goldman Sachs Group, Inc.", price: 410.35 },
     { id: "DIS", name: "The Walt Disney Company", price: 175.25 }
-  ]);
+  ];});
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const updatedStocks = stocks.map((stock) => ({
-        ...stock,
-        prevPrice: stock.price, // Store previous price
-        price: stock.price + generateRandomDataPoint(-10, 10),
-      }));
-      setStocks(updatedStocks);
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [stocks]);
 
   const buyStock = (stock) => {
     if (balance >= stock.price) {
@@ -67,6 +58,40 @@ const Stock = () => {
       // Implement buy logic here
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem('balance', balance.toString());
+  }, [balance]);
+
+  useEffect(() => {
+    localStorage.setItem('stocks', JSON.stringify(stocks));
+  }, [stocks]);
+
+  useEffect(() => {
+    // Code to run when the component mounts (at the start)
+    
+    const intervalId = setInterval(() => {
+      const updatedStocks = stocks.map((stock) => 
+     {
+      const prep=stock.price;
+      // console.log(prep)
+      (
+        {
+        ...stock,
+        prevPrice: stock.price, // Store previous price
+        price: stock.price + generateRandomDataPoint(-10, 10),
+      })}
+      
+      );
+      setStocks(updatedStocks);
+            console.log('This runs every 1 second.');
+    }, 1000); 
+    
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []); 
+
 
   return (
     <ChakraProvider theme={theme}>
@@ -91,6 +116,8 @@ const Stock = () => {
                   <StatLabel>Price</StatLabel>
                   <StatNumber>${stock.price.toFixed(2)}</StatNumber>
                 </Stat>
+                {typeof stock.price === 'number' && typeof stock.prevPrice === 'number' ? (
+
                 <Box
                   p={1}
                   bg={stock.price > stock.prevPrice ? "green.100" : "red.100"}
@@ -106,12 +133,20 @@ const Stock = () => {
                       type={stock.price > stock.prevPrice ? "increase" : "decrease"}
                       color={stock.price > stock.prevPrice ? "green.500" : "red.500"}
                     />
-                    <Box as="span" fontSize="sm" fontWeight="bold">
-                      {(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
-                    </Box>
+                                           <Box as="span" fontSize="sm" fontWeight="bold">
+
+${(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
+                                           </Box>
+    
+
+
+
                     </Stat>
                   </HStack>
                 </Box>
+                  ) : (
+                    <></>
+                  )}
               </HStack>
               <Button
                      colorScheme="blue"

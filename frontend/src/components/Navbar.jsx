@@ -70,7 +70,7 @@ const Navbar = () => {
         px={4}
         py={2}
         align="center"
-      ><Image height={10} width={10} src="/public/logo1.png" />
+      ><Image height={10} width={10} src="/logo1.png" />
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.5 }}
           animate={{ opacity: 1, y: 2, scale: 1.5, x:40 }}
