@@ -64,25 +64,18 @@ const Stock = () => {
   }, [balance]);
 
   useEffect(() => {
-    localStorage.setItem('stocks', JSON.stringify(stocks));
+    localStorage.setItem('stocks', JSON.stringify(stocks ));
   }, [stocks]);
 
   useEffect(() => {
     // Code to run when the component mounts (at the start)
     
     const intervalId = setInterval(() => {
-      const updatedStocks = stocks.map((stock) => 
-     {
-      const prep=stock.price;
-      // console.log(prep)
-      (
-        {
+      const updatedStocks = stocks.map((stock) => ({
         ...stock,
         prevPrice: stock.price, // Store previous price
         price: stock.price + generateRandomDataPoint(-10, 10),
-      })}
-      
-      );
+      }));
       setStocks(updatedStocks);
             console.log('This runs every 1 second.');
     }, 1000); 
