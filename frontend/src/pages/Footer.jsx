@@ -13,7 +13,7 @@ const Footer = () => {
         px={{ base: '4', sm: '0' }} // Add some padding on small screens
       >
         <VStack spacing="4" mb={{ base: '6', sm: '0' }}> {/* Margin bottom on small screens */}
-          <Text fontSize="xl">CareerCompass</Text>
+          <Text fontSize="xl">Financy</Text>
           <Text>&copy; {new Date().getFullYear()} All Rights Reserved</Text>
         </VStack>
 

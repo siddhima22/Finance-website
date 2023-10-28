@@ -5,11 +5,6 @@ import {
   Button,
   ChakraProvider,
   extendTheme,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatArrow,
-  HStack,
   Table,
   Thead,
   Tbody,
@@ -32,6 +27,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import StockChangeIndicator from "./StockChangeIndicator";
 
 const theme = extendTheme({
   styles: {
@@ -67,24 +63,28 @@ const Stock = () => {
     return storedValue
       ? JSON.parse(storedValue)
       : [
-          // your stock data
-          { id: "AAPL", name: "Apple Inc.", price: 150.25 },
-          { id: "GOOGL", name: "Alphabet Inc.", price: 2765.45 },
-          { id: "MSFT", name: "Microsoft Corporation", price: 305.52 },
-          { id: "JPM", name: "JPMorgan Chase & Co.", price: 145.70 },
-          { id: "TSLA", name: "Tesla, Inc.", price: 735.72 },
-          { id: "AMZN", name: "Amazon.com, Inc.", price: 3349.63 },
-          { id: "FB", name: "Meta Platforms, Inc.", price: 330.45 },
-          { id: "NFLX", name: "Netflix, Inc.", price: 610.20 },
-          { id: "NVDA", name: "NVIDIA Corporation", price: 278.90 },
-          { id: "PYPL", name: "PayPal Holdings, Inc.", price: 230.75 },
-          { id: "INTC", name: "Intel Corporation", price: 54.60 },
-          { id: "AMD", name: "Advanced Micro Devices, Inc.", price: 123.15 },
-          { id: "V", name: "Visa Inc.", price: 250.80 },
-          { id: "GS", name: "The Goldman Sachs Group, Inc.", price: 410.35 },
-          { id: "DIS", name: "The Walt Disney Company", price: 175.25 },
+          // Indian stock data
+          { id: "TCS", name: "Tata Consultancy Services", price: 3450.75 },
+          { id: "HDFCBANK", name: "HDFC Bank", price: 1480.35 },
+          { id: "RELIANCE", name: "Reliance Industries", price: 2500.90 },
+          { id: "TATASTEEL", name: "Tata Steel", price: 150.45 },
+          { id: "INFY", name: "Infosys Limited", price: 1785.20 },
+          { id: "HDFC", name: "Housing Development Finance Corporation", price: 2800.60 },
+          { id: "ICICIBANK", name: "ICICI Bank", price: 780.90 },
+          { id: "HINDUNILVR", name: "Hindustan Unilever", price: 2450.30 },
+          { id: "ITC", name: "ITC Limited", price: 210.75 },
+          { id: "WIPRO", name: "Wipro Limited", price: 580.15 },
+          { id: "BAJAJ-AUTO", name: "Bajaj Auto", price: 3200.95 },
+          { id: "CIPLA", name: "Cipla Limited", price: 920.40 },
+          { id: "LT", name: "Larsen & Toubro", price: 1685.75 },
+          { id: "SBI", name: "State Bank of India", price: 450.35 },
+          { id: "HEROMOTOCO", name: "Hero MotoCorp", price: 2650.10 },
+          { id: "HCLTECH", name: "HCL Technologies", price: 1105.25 },
+          { id: "KOTAKBANK", name: "Kotak Mahindra Bank", price: 2050.50 },
+          // Add more Indian stocks here
         ];
   });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [chartData, setChartData] = useState(generateDummyChartData());
@@ -119,6 +119,27 @@ const Stock = () => {
     if (balance >= stock.price) {
       setBalance(balance - stock.price);
       // Implement buy logic here
+      const updatedStocks = stocks.map((s) => {
+        if (s.id === stock.id) {
+          return { ...s, quantity: (s.quantity || 0) + 1 };
+        }
+        return s;
+      });
+      setStocks(updatedStocks);
+    }
+  };
+
+  const sellStock = (stock) => {
+    if (stock.quantity > 0) {
+      setBalance(balance + stock.price);
+      // Implement sell logic here
+      const updatedStocks = stocks.map((s) => {
+        if (s.id === stock.id) {
+          return { ...s, quantity: s.quantity - 1 };
+        }
+        return s;
+      });
+      setStocks(updatedStocks);
     }
   };
 
@@ -154,7 +175,7 @@ const Stock = () => {
         <Text fontSize="2xl" mb={4}>
           Balance: ${balance.toFixed(2)}
         </Text>
-        <Table variant="simple">
+        <Table variant="simple" overflowX="auto" size={"sm"}>
           <Thead>
             <Tr>
               <Th>Name</Th>
@@ -171,46 +192,7 @@ const Stock = () => {
                 <Td>
                   {typeof stock.price === "number" &&
                   typeof stock.prevPrice === "number" ? (
-                    <Box
-                      p={1}
-                      bg={
-                        stock.price > stock.prevPrice ? "green.100" : "red.100"
-                      }
-                      borderColor={
-                        stock.price > stock.prevPrice
-                          ? "green.500"
-                          : "red.500"
-                      }
-                      borderWidth="1px"
-                      borderRadius="lg"
-                      roundedLeft="full"
-                      roundedRight="full"
-                    >
-                      <HStack spacing={1} align="center">
-                        <Stat>
-                          <StatArrow
-                            type={
-                              stock.price > stock.prevPrice
-                                ? "increase"
-                                : "decrease"
-                            }
-                            color={
-                              stock.price > stock.prevPrice
-                                ? "green.500"
-                                : "red.500"
-                            }
-                          />
-                          <Box as="span" fontSize="sm" fontWeight="bold">
-                            ${(
-                              ((stock.price - stock.prevPrice) /
-                                stock.prevPrice) *
-                              100
-                            ).toFixed(2)}
-                            %
-                          </Box>
-                        </Stat>
-                      </HStack>
-                    </Box>
+                    <StockChangeIndicator stock={stock} />
                   ) : (
                     <></>
                   )}
@@ -224,6 +206,15 @@ const Stock = () => {
                     onClick={() => buyStock(stock)}
                   >
                     Buy
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    _hover={{ bg: "#ffa0a0", color: "white" }}
+                    bg="red.500"
+                    color="white"
+                    onClick={() => sellStock(stock)}
+                  >
+                    Sell
                   </Button>
                   <Button
                     colorScheme="teal"
@@ -272,7 +263,11 @@ const Stock = () => {
                 </AreaChart>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => setIsModalOpen(false)}
+                >
                   Close
                 </Button>
               </ModalFooter>
