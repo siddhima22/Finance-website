@@ -10,6 +10,12 @@ import {
   StatNumber,
   StatArrow,
   HStack,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -17,12 +23,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
 } from "@chakra-ui/react";
 import {
   AreaChart,
@@ -59,28 +59,32 @@ const generateDummyChartData = () => {
 };
 
 const Stock = () => {
-  const [balance, setBalance] = useState(() => Number(localStorage.getItem('balance')) || 10000);
+  const [balance, setBalance] = useState(
+    () => Number(localStorage.getItem("balance")) || 10000
+  );
   const [stocks, setStocks] = useState(() => {
-    const storedValue = localStorage.getItem('objectArray');
-    return storedValue ? JSON.parse(storedValue) :
-[
-    // your stock data
-    { id: "AAPL", name: "Apple Inc.", price: 150.25 },
-    { id: "GOOGL", name: "Alphabet Inc.", price: 2765.45 },
-    { id: "MSFT", name: "Microsoft Corporation", price: 305.52 }, 
-    { id: "JPM", name: "JPMorgan Chase & Co.", price: 145.70 },
-    { id: "TSLA", name: "Tesla, Inc.", price: 735.72 },
-    { id: "AMZN", name: "Amazon.com, Inc.", price: 3349.63 },
-    { id: "FB", name: "Meta Platforms, Inc.", price: 330.45 },
-    { id: "NFLX", name: "Netflix, Inc.", price: 610.20 },
-    { id: "NVDA", name: "NVIDIA Corporation", price: 278.90 },
-    { id: "PYPL", name: "PayPal Holdings, Inc.", price: 230.75 },
-    { id: "INTC", name: "Intel Corporation", price: 54.60 },
-    { id: "AMD", name: "Advanced Micro Devices, Inc.", price: 123.15 },
-    { id: "V", name: "Visa Inc.", price: 250.80 },
-    { id: "GS", name: "The Goldman Sachs Group, Inc.", price: 410.35 },
-    { id: "DIS", name: "The Walt Disney Company", price: 175.25 }
-  ];});
+    const storedValue = localStorage.getItem("objectArray");
+    return storedValue
+      ? JSON.parse(storedValue)
+      : [
+          // your stock data
+          { id: "AAPL", name: "Apple Inc.", price: 150.25 },
+          { id: "GOOGL", name: "Alphabet Inc.", price: 2765.45 },
+          { id: "MSFT", name: "Microsoft Corporation", price: 305.52 },
+          { id: "JPM", name: "JPMorgan Chase & Co.", price: 145.70 },
+          { id: "TSLA", name: "Tesla, Inc.", price: 735.72 },
+          { id: "AMZN", name: "Amazon.com, Inc.", price: 3349.63 },
+          { id: "FB", name: "Meta Platforms, Inc.", price: 330.45 },
+          { id: "NFLX", name: "Netflix, Inc.", price: 610.20 },
+          { id: "NVDA", name: "NVIDIA Corporation", price: 278.90 },
+          { id: "PYPL", name: "PayPal Holdings, Inc.", price: 230.75 },
+          { id: "INTC", name: "Intel Corporation", price: 54.60 },
+          { id: "AMD", name: "Advanced Micro Devices, Inc.", price: 123.15 },
+          { id: "V", name: "Visa Inc.", price: 250.80 },
+          { id: "GS", name: "The Goldman Sachs Group, Inc.", price: 410.35 },
+          { id: "DIS", name: "The Walt Disney Company", price: 175.25 },
+        ];
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [chartData, setChartData] = useState(generateDummyChartData());
@@ -118,18 +122,17 @@ const Stock = () => {
     }
   };
 
-  
   useEffect(() => {
-    localStorage.setItem('balance', balance.toString());
+    localStorage.setItem("balance", balance.toString());
   }, [balance]);
 
   useEffect(() => {
-    localStorage.setItem('stocks', JSON.stringify(stocks));
+    localStorage.setItem("stocks", JSON.stringify(stocks));
   }, [stocks]);
 
   useEffect(() => {
     // Code to run when the component mounts (at the start)
-    
+
     const intervalId = setInterval(() => {
       const updatedStocks = stocks.map((stock) => ({
         ...stock,
@@ -137,15 +140,13 @@ const Stock = () => {
         price: stock.price + generateRandomDataPoint(-10, 10),
       }));
       setStocks(updatedStocks);
-            console.log('This runs every 1 second.');
-    }, 1000); 
-    
+      console.log("This runs every 1 second.");
+    }, 1000);
+
     return () => {
       clearInterval(intervalId);
     };
-  }, []); 
-
-
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>
@@ -168,38 +169,51 @@ const Stock = () => {
                 <Td>{stock.name}</Td>
                 <Td>${stock.price.toFixed(2)}</Td>
                 <Td>
-                   {typeof stock.price === 'number' && typeof stock.prevPrice === 'number' ? (
-
-                <Box
-                  p={1}
-                  bg={stock.price > stock.prevPrice ? "green.100" : "red.100"}
-                  borderColor={stock.price > stock.prevPrice ? "green.500" : "red.500"}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  roundedLeft="full"
-                  roundedRight="full"
-                >
-                  <HStack spacing={1} align="center">
-                    <Stat>
-                    <StatArrow
-                      type={stock.price > stock.prevPrice ? "increase" : "decrease"}
-                      color={stock.price > stock.prevPrice ? "green.500" : "red.500"}
-                    />
-                                           <Box as="span" fontSize="sm" fontWeight="bold">
-
-${(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
-                                           </Box>
-    
-
-
-
-                    </Stat>
-                  </HStack>
-                </Box>
+                  {typeof stock.price === "number" &&
+                  typeof stock.prevPrice === "number" ? (
+                    <Box
+                      p={1}
+                      bg={
+                        stock.price > stock.prevPrice ? "green.100" : "red.100"
+                      }
+                      borderColor={
+                        stock.price > stock.prevPrice
+                          ? "green.500"
+                          : "red.500"
+                      }
+                      borderWidth="1px"
+                      borderRadius="lg"
+                      roundedLeft="full"
+                      roundedRight="full"
+                    >
+                      <HStack spacing={1} align="center">
+                        <Stat>
+                          <StatArrow
+                            type={
+                              stock.price > stock.prevPrice
+                                ? "increase"
+                                : "decrease"
+                            }
+                            color={
+                              stock.price > stock.prevPrice
+                                ? "green.500"
+                                : "red.500"
+                            }
+                          />
+                          <Box as="span" fontSize="sm" fontWeight="bold">
+                            ${(
+                              ((stock.price - stock.prevPrice) /
+                                stock.prevPrice) *
+                              100
+                            ).toFixed(2)}
+                            %
+                          </Box>
+                        </Stat>
+                      </HStack>
+                    </Box>
                   ) : (
                     <></>
                   )}
-
                 </Td>
                 <Td>
                   <Button
@@ -236,8 +250,8 @@ ${(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
                   {selectedStock.name}
                 </Text>
                 <AreaChart
-                  width={400}
-                  height={200}
+                  width="100%" // Make the chart width responsive
+                  height={200} // You can adjust the height as needed
                   data={chartData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
@@ -250,7 +264,9 @@ ${(((stock.price - stock.prevPrice) / stock.prevPrice) * 100).toFixed(2)}%
                     dataKey="price"
                     stroke="#8884d8"
                     fill={(props) =>
-                      props.payload.price > props.payload.prevPrice ? "green" : "red"
+                      props.payload.price > props.payload.prevPrice
+                        ? "green"
+                        : "red"
                     }
                   />
                 </AreaChart>
