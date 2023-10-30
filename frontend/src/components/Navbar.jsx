@@ -58,6 +58,7 @@ function WithSubnavigation() {
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
+            fontWeight={'bold'}
           >
             Financy
           </Text>
@@ -237,43 +238,35 @@ const MobileNavItem = ({ label, children, href }) => {
 };
 
 const NAV_ITEMS = [
+
+   {
+    label: 'Stock Trading',
+    href: '/dashboard/stock',
+  },
   {
-    label: 'Inspiration',
+    label: 'Investment Insights ',
+    href: '/dashboard/display',
+ 
+  },
+  {
+    label: 'Quiz Game',
+    href: '#',
+  },
+ 
+  {
+    label: 'Resource Library',
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
+        label: 'Learn and Study',
+        subLabel: 'Take a quiz and get Study material required',
         href: '#',
       },
       {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
+        label: 'Video Explanations',
+        subLabel: 'Elaborate videos tailored to your learning',
         href: '#',
       },
     ],
-  },
-  {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
   },
 ];
 
