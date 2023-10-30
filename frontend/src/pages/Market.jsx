@@ -1,3 +1,5 @@
+
+//THIS IS A Test market file main page in on marketDisplay ,route =  /dashboard/display
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
