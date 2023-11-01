@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import ReviewPage from "../components/ReviewPage ";
-import ForumApp from "../components/ForumApp";
+import ForumApp from "../../oldbuild/ForumApp";
 import Hero from "../components/Hero"
 import StatsCard from "../components/StatsCard"
 import HorizontalScrollPane from "../components/HorizontalScrollPane";
