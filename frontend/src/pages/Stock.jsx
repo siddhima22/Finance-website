@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useToast
 } from "@chakra-ui/react";
 import {
   AreaChart,
@@ -54,6 +55,26 @@ const generateDummyChartData = () => {
   return dummyData.reverse();
 };
 
+
+
+const Sidebar = ({ boughtStocks }) => {
+  return (
+    <Box p={4} bg="gray.200" w={300}>
+      <Text fontSize="xl" mb={2}>
+        Bought Stocks
+      </Text>
+      <ul>
+        {boughtStocks.map((stock) => (
+          <li key={stock.id}>
+            {stock.name} - Quantity: {stock.quantity}
+          </li>
+        ))}
+      </ul>
+    </Box>
+  );
+};
+
+
 const Stock = () => {
   const [balance, setBalance] = useState(
     () => Number(localStorage.getItem("balance")) || 10000
@@ -64,23 +85,23 @@ const Stock = () => {
       ? JSON.parse(storedValue)
       : [
           // Indian stock data
-          { id: "TCS", name: "Tata Consultancy Services", price: 3450.75 },
-          { id: "HDFCBANK", name: "HDFC Bank", price: 1480.35 },
-          { id: "RELIANCE", name: "Reliance Industries", price: 2500.90 },
-          { id: "TATASTEEL", name: "Tata Steel", price: 150.45 },
-          { id: "INFY", name: "Infosys Limited", price: 1785.20 },
-          { id: "HDFC", name: "Housing Development Finance Corporation", price: 2800.60 },
-          { id: "ICICIBANK", name: "ICICI Bank", price: 780.90 },
-          { id: "HINDUNILVR", name: "Hindustan Unilever", price: 2450.30 },
-          { id: "ITC", name: "ITC Limited", price: 210.75 },
-          { id: "WIPRO", name: "Wipro Limited", price: 580.15 },
-          { id: "BAJAJ-AUTO", name: "Bajaj Auto", price: 3200.95 },
-          { id: "CIPLA", name: "Cipla Limited", price: 920.40 },
-          { id: "LT", name: "Larsen & Toubro", price: 1685.75 },
-          { id: "SBI", name: "State Bank of India", price: 450.35 },
-          { id: "HEROMOTOCO", name: "Hero MotoCorp", price: 2650.10 },
-          { id: "HCLTECH", name: "HCL Technologies", price: 1105.25 },
-          { id: "KOTAKBANK", name: "Kotak Mahindra Bank", price: 2050.50 },
+          { id: "TCS", name: "Tata Consultancy Services", price: 3450.75,quantity: 0 },
+          { id: "HDFCBANK", name: "HDFC Bank", price: 1480.35,quantity: 0 },
+          { id: "RELIANCE", name: "Reliance Industries", price: 2500.90,quantity: 0 },
+          { id: "TATASTEEL", name: "Tata Steel", price: 150.45,quantity: 0 },
+          { id: "INFY", name: "Infosys Limited", price: 1785.20,quantity: 0 },
+          { id: "HDFC", name: "Housing Development Finance Corporation", price: 2800.60 ,quantity: 0},
+          { id: "ICICIBANK", name: "ICICI Bank", price: 780.90,quantity: 0 },
+          { id: "HINDUNILVR", name: "Hindustan Unilever", price: 2450.30 ,quantity: 0},
+          { id: "ITC", name: "ITC Limited", price: 210.75,quantity: 0 },
+          { id: "WIPRO", name: "Wipro Limited", price: 580.15 ,quantity: 0},
+          { id: "BAJAJ-AUTO", name: "Bajaj Auto", price: 3200.95 ,quantity: 0},
+          { id: "CIPLA", name: "Cipla Limited", price: 920.40 ,quantity: 0},
+          { id: "LT", name: "Larsen & Toubro", price: 1685.75 ,quantity: 0},
+          { id: "SBI", name: "State Bank of India", price: 450.35 ,quantity: 0},
+          { id: "HEROMOTOCO", name: "Hero MotoCorp", price: 2650.10 ,quantity: 0},
+          { id: "HCLTECH", name: "HCL Technologies", price: 1105.25 ,quantity: 0},
+          { id: "KOTAKBANK", name: "Kotak Mahindra Bank", price: 2050.50,quantity: 0 },
           // Add more Indian stocks here
         ];
   });
@@ -114,11 +135,14 @@ const Stock = () => {
     setSelectedStock(stock);
     setIsModalOpen(!isModalOpen);
   };
+  
+  const [boughtStocks, setBoughtStocks] = useState([]);
 
   const buyStock = (stock) => {
+    const existingStock = boughtStocks.find((s) => s.id === stock.id);
+
     if (balance >= stock.price) {
       setBalance(balance - stock.price);
-      // Implement buy logic here
       const updatedStocks = stocks.map((s) => {
         if (s.id === stock.id) {
           return { ...s, quantity: (s.quantity || 0) + 1 };
@@ -126,13 +150,30 @@ const Stock = () => {
         return s;
       });
       setStocks(updatedStocks);
+
+      if (existingStock) {
+        
+        const updatedBoughtStocks = boughtStocks.map((s) => {
+          if (s.id === stock.id) {
+            return { ...s, quantity: s.quantity + 1 };
+          }
+          return s;
+        });
+        setBoughtStocks(updatedBoughtStocks);
+      } else {
+        
+        setBoughtStocks([...boughtStocks, { ...stock, quantity: 1 }]);
+      }
     }
   };
+  const toast = useToast(); 
 
   const sellStock = (stock) => {
-    if (stock.quantity > 0) {
-      setBalance(balance + stock.price);
-      // Implement sell logic here
+    const existingStock = boughtStocks.find((s) => s.id === stock.id);
+    const targetStock = stocks.find((s) => s.id === stock.id);
+
+    if (existingStock && existingStock.quantity > 0) {
+      setBalance(balance + targetStock.price);
       const updatedStocks = stocks.map((s) => {
         if (s.id === stock.id) {
           return { ...s, quantity: s.quantity - 1 };
@@ -140,8 +181,38 @@ const Stock = () => {
         return s;
       });
       setStocks(updatedStocks);
+
+      const updatedBoughtStocks = boughtStocks
+        .map((s) => {
+          if (s.id === stock.id) {
+            return { ...s, quantity: s.quantity - 1 };
+          }
+          return s;
+        })
+        .filter((s) => s.quantity > 0);
+
+      setBoughtStocks(updatedBoughtStocks);
+
+      if (existingStock.quantity === 0) {
+        toast({
+          title: `Quantity of ${targetStock.name} is 0`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } else {
+      
+      toast({
+        title: `Quantity of ${targetStock.name} is already 0`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
+
+
 
   useEffect(() => {
     localStorage.setItem("balance", balance.toString());
@@ -152,12 +223,12 @@ const Stock = () => {
   }, [stocks]);
 
   useEffect(() => {
-    // Code to run when the component mounts (at the start)
+   
 
     const intervalId = setInterval(() => {
       const updatedStocks = stocks.map((stock) => ({
         ...stock,
-        prevPrice: stock.price, // Store previous price
+        prevPrice: stock.price,
         price: stock.price + generateRandomDataPoint(-10, 10),
       }));
       setStocks(updatedStocks);
@@ -171,7 +242,9 @@ const Stock = () => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box p={6}>
+      
+      <Box p={6} display="flex">
+      <Box flex={1}>
         <Text fontSize="2xl" mb={4}>
           Balance: ${balance.toFixed(2)}
         </Text>
@@ -201,13 +274,15 @@ const Stock = () => {
                   <Button
                     colorScheme="blue"
                     _hover={{ bg: "#b6c5fa", color: "white" }}
+                    borderRadius={"30px"}
                     bg="blue.500"
                     color="white"
                     onClick={() => buyStock(stock)}
                   >
                     Buy
                   </Button>
-                  <Button
+                  <Button margin={"5px"}
+                     borderRadius={"30px"}
                     colorScheme="red"
                     _hover={{ bg: "#ffa0a0", color: "white" }}
                     bg="red.500"
@@ -219,6 +294,7 @@ const Stock = () => {
                   <Button
                     colorScheme="teal"
                     _hover={{ bg: "#b6c5fa", color: "white" }}
+                    borderRadius={"30px"}
                     bg="teal.500"
                     color="white"
                     onClick={() => handleModalToggle(stock)}
@@ -230,50 +306,50 @@ const Stock = () => {
             ))}
           </Tbody>
         </Table>
-        {selectedStock && (
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>{selectedStock.name} Statistics</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Text fontSize="xl" mb={2}>
-                  {selectedStock.name}
-                </Text>
-                <AreaChart
-                  width="100%" // Make the chart width responsive
-                  height={200} // You can adjust the height as needed
-                  data={chartData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                >
-                  <XAxis dataKey="time" />
-                  <YAxis />
-                  <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                  <Tooltip />
-                  <Area
-                    type="monotone"
-                    dataKey="price"
-                    stroke="#8884d8"
-                    fill={(props) =>
-                      props.payload.price > props.payload.prevPrice
-                        ? "green"
-                        : "red"
-                    }
-                  />
-                </AreaChart>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  colorScheme="blue"
-                  mr={3}
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Close
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-        )}
+
+        </Box>
+      
+      
+             {selectedStock && (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>{selectedStock.name} Statistics</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text fontSize="xl" mb={2}>
+                {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
+              </Text>
+              <AreaChart
+                width={400}
+                height={200}
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <XAxis dataKey="time" />
+                <YAxis />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="price"
+                  stroke="#8884d8"
+                  fill={(props) =>
+                    props.payload.price > props.payload.prevPrice ? "green" : "red"
+                  }
+                />
+              </AreaChart>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
+        {/*  for bought stocks */}
+        <Sidebar boughtStocks={boughtStocks} />
       </Box>
     </ChakraProvider>
   );
