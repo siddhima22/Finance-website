@@ -97,16 +97,6 @@ const MarketDisplay = () => {
 
           <h1>Bitcoin Stock Price</h1>
 
-          <ResponsiveContainer width="100%" height={400} >
-            
-        <LineChart data={transformedPriceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="x" tick={{ fill: 'white' }} />
-          <YAxis tick={{ fill: 'white' }} />
-          <Tooltip labelFormatter={value => moment(value).format('MMMM Do YYYY, h:mm')} />
-          <Legend />
-          <Line type="monotone" dataKey="y" name="Price" stroke="#8884d8" dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
         </div>
         <div
           style={{

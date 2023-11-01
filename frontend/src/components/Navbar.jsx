@@ -244,11 +244,11 @@ const NAV_ITEMS = [
 
    {
     label: 'Stock Trading',
-    href: '/dashboard/stock',
+    href: '/stock',
   },
   {
     label: 'Investment Insights ',
-    href: '/dashboard/display',
+    href: '/display',
  
   },
   {

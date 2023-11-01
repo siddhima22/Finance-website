@@ -53,13 +53,9 @@ import {
           <Box flex="2" padding="1rem">
             <VStack spacing="1rem">
               <Text fontWeight="bold" fontSize={{ base: "xl", md: "4xl" }}>
-                Heading Lorem, ipsum.
+                How to save yourself...
               </Text>
-                  <Text>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa
-                  quam quo quis, architecto necessitatibus quidem quibusdam harum
-                  delectus deleniti aliquid.
-                </Text>
+                  
             </VStack>
           </Box>
         </Box>
@@ -90,13 +86,9 @@ import {
           <Box flex="2" padding="1rem">
             <VStack spacing="1rem">
               <Text fontWeight="bold" fontSize={{ base: "xl", md: "4xl" }}>
-                Heading Lorem, ipsum.
+                Learn how to minimize loss...
               </Text>
-                  <Text>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa
-                  quam quo quis, architecto necessitatibus quidem quibusdam harum
-                  delectus deleniti aliquid.
-                </Text>
+                  
             </VStack>
           </Box>
         </Box>
@@ -127,13 +119,9 @@ import {
           <Box flex="2" padding="1rem">
             <VStack spacing="1rem">
               <Text fontWeight="bold" fontSize={{ base: "xl", md: "4xl" }}>
-                Heading Lorem, ipsum.
+                Learn how to make money ...
               </Text>
-                  <Text>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa
-                  quam quo quis, architecto necessitatibus quidem quibusdam harum
-                  delectus deleniti aliquid.
-                </Text>
+                
             </VStack>
           </Box>
         </Box>

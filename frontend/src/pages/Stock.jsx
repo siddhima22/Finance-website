@@ -18,8 +18,14 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useToast
+  useToast,
+  Divider,
+  useColorMode,
+  IconButton
+
 } from "@chakra-ui/react";
+import { SunIcon, MoonIcon } from "@chakra-ui/icons"; // Chakra UI icons
+
 import {
   AreaChart,
   Area,
@@ -27,8 +33,11 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  LineChart, Line, Legend, ResponsiveContainer 
 } from "recharts";
 import StockChangeIndicator from "./StockChangeIndicator";
+import initialPriceData from "./priceData.json"
+import moment from 'moment';
 
 const theme = extendTheme({
   styles: {
@@ -83,6 +92,31 @@ const Sidebar = ({ boughtStocks }) => {
 
 
 const Stock = () => {
+
+  const [priceData, setPriceData] = useState(initialPriceData);
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const timestamp = Date.now();
+      const price = Math.random() * 500 + 11000; // Random price between 11000 and 11500
+      const newDataPoint = [timestamp, price];
+
+      setPriceData(prevData => {
+        const updatedData = prevData.slice(1); // Remove the oldest data point
+        return [...updatedData, newDataPoint]; // Add the new data point
+      });
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []); // Empty dependency array ensures the effect runs once after the initial render
+
+  const transformedPriceData = priceData.map(([timestamp, price]) => ({
+    x: moment(timestamp).format('MMMM Do YYYY, h:mm'), // Format the timestamp for display
+    y: price, // Use the price as the y-axis value
+  }));
+
+  
   const [balance, setBalance] = useState(
     () => Number(localStorage.getItem("balance")) || 10000
   );
@@ -117,6 +151,36 @@ const Stock = () => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [chartData, setChartData] = useState(generateDummyChartData());
 
+
+  const updateSelectedStock = () => {
+    if (selectedStock) {
+      const updatedStock = stocks.find((stock) => stock.id === selectedStock.id);
+      if (updatedStock) {
+        setSelectedStock(updatedStock);
+      }
+    }
+  };
+
+useEffect(() => {
+  const updateSelectedStock = () => {
+    if (selectedStock) {
+      const updatedStock = stocks.find((stock) => stock.id === selectedStock.id);
+      if (updatedStock) {
+        setSelectedStock(updatedStock);
+      }
+    }
+  };
+
+  // Run the update function immediately and at a regular interval
+  updateSelectedStock();
+  const stockUpdateInterval = setInterval(updateSelectedStock, 1000);
+
+  return () => {
+    clearInterval(stockUpdateInterval);
+  };
+
+}, [stocks,updateSelectedStock]);
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const updatedStocks = stocks.map((stock) => ({
@@ -253,8 +317,9 @@ const Stock = () => {
       <Box p={6} display="flex">
       <Box flex={1} mt={[12, 24]}>
         <Text fontSize="6xl" mb={4}>
-          Balance: ${balance.toFixed(2)}
+          Balance: ₹{balance.toFixed(2)}
         </Text>
+        <Divider/>
         <Table variant="simple" overflowX="auto" size={"sm"}>
           <Thead>
             <Tr>
@@ -268,7 +333,7 @@ const Stock = () => {
             {stocks.map((stock) => (
               <Tr key={stock.id}>
                 <Td>{stock.name}</Td>
-                <Td>Rs. {stock.price.toFixed(2)}</Td>
+                <Td>₹ {stock.price.toFixed(2)}</Td>
                 <Td>
                   {typeof stock.price === "number" &&
                   typeof stock.prevPrice === "number" ? (
@@ -318,42 +383,48 @@ const Stock = () => {
       
       
              {selectedStock && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{selectedStock.name} Statistics</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text fontSize="xl" mb={2}>
-                {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
-              </Text>
-              <AreaChart
-                width={400}
-                height={200}
-                data={chartData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <XAxis dataKey="time" />
-                <YAxis />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <Tooltip />
-                <Area
-                  type="poppins"
-                  dataKey="price"
-                  stroke="#8884d8"
-                  fill={(props) =>
-                    props.payload.price > props.payload.prevPrice ? "green" : "red"
-                  }
-                />
-              </AreaChart>
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size={"full"}>
+     <ModalOverlay />
+     <ModalContent bg="gray.900">
+       <ModalHeader color="white">{selectedStock.name}</ModalHeader>
+       <ModalCloseButton  color={"white"}/>
+       <ModalBody>
+            
+            <Text fontSize="xl" mb={2} color="white">
+              {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
+            </Text>
+
+            <ResponsiveContainer width="100%" height={400}>
+           <AreaChart data={transformedPriceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+           <CartesianGrid strokeDasharray="3 3" />
+             <defs>
+               <linearGradient id="glowingAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                 <stop offset="5%" stopColor="#4FD1C5" stopOpacity={0.8} />
+                 <stop offset="95%" stopColor="#4FD1C5" stopOpacity={0} />
+               </linearGradient>
+             </defs>
+             <XAxis dataKey="x" tick={{ fill: 'white' }} />
+             <YAxis tick={{ fill: 'white' }} />
+             <Tooltip labelFormatter={value => moment(value).format('MMMM Do YYYY, h:mm')} />
+             <Legend />
+             <Area
+               type="monotone"
+               dataKey="y"
+               name="Price"
+               stroke="#4FD1C5"
+               fill="url(#glowingAreaGradient)"
+             />
+           </AreaChart>
+         </ResponsiveContainer>
+                   </ModalBody>
+
+       <ModalFooter>
+         <Button colorScheme="teal" mr={3} onClick={() => setIsModalOpen(false)}>
+           Close
+         </Button>
+       </ModalFooter>
+     </ModalContent>
+   </Modal>
       )}
         {/*  for bought stocks */}
         <Sidebar boughtStocks={boughtStocks} />

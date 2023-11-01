@@ -21,7 +21,7 @@ import RootLayoutDash from "./layouts/RootLayoutDash";
 import Stock from "./pages/Stock";
 import Market from "./pages/Market";
 import MarketDisplay from "./pages/MarketDisplay";
-
+import Dashboard from "./pages/Dashboard";
 // layouts
 import RootLayout from "./layouts/RootLayout";
 import HelpLayout from "./layouts/HelpLayout";
@@ -33,10 +33,12 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
+      <Route path="stock" element={<Stock />} />
+      <Route path="market" element={<Market />} />
+      <Route path="display" element={<MarketDisplay />} />
+
       <Route path="dashboard" element={<RootLayoutDash />}>
-        <Route path="stock" element={<Stock />} />
-        <Route path="market" element={<Market />} />
-        <Route path="display" element={<MarketDisplay />} />
+        <Route index element={<Dashboard />} />
       </Route>
       <Route path="about" element={<About />} />
       <Route path="authenticate" element={<Signup />} />
