@@ -19,7 +19,7 @@ const ReviewPage = () => {
   };
 
   return (
-    <Box display={{ base: "block", md: "flex" }} p={8}>
+    <Box display={{ base: "block", md: "flex" }} p={8} maxW="container.lg">
       <Box
         flex={{ base: "none", md: "1" }}
         p={8}
