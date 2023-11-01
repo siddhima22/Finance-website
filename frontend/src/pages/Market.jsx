@@ -1,7 +1,7 @@
 
 //THIS IS A Test market file main page in on marketDisplay ,route =  /dashboard/display
 import React, { useState, useEffect } from 'react';
-import { AreaChart,Area, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AreaChart,Area, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer,CartesianGrid } from 'recharts';
 import { CheckCircleIcon, DownloadIcon } from '@chakra-ui/icons'
 import { Box, SimpleGrid, Text, Heading ,  Avatar,Stat,StatHelpText,StatArrow,StatNumber,StatLabel} from "@chakra-ui/react";
 import priceData from "./priceData.json"
@@ -41,6 +41,7 @@ const Market = () => {
   
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []); 
+  
 
   return (
   <Box style={{ backgroundColor: '#1A202C', color: 'white', height: '100vh', padding: '20px' }}>
@@ -84,6 +85,8 @@ const Market = () => {
           data={priceData.concat(newpriceData)} // Concatenate initial data with new data
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
+            <CartesianGrid strokeDasharray="3 3" />
+
           <defs>
             <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
