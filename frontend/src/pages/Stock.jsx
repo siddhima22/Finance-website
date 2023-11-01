@@ -18,7 +18,13 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useToast
+  useToast,
+   Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   AreaChart,
@@ -56,10 +62,22 @@ const generateDummyChartData = () => {
 };
 
 
-
 const Sidebar = ({ boughtStocks }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <Box p={4} bg="gray.200" w={300}>
+    <>
+      <Button onClick={onOpen} display={["block", "none"]} mb={4}>
+        Open Sidebar
+      </Button>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody p={4}>
+            <Table variant="simple">
+              {/* Table content remains the same */}
+              <Box p={4} bg="gray.200" w={300}>
     <Table variant="simple">
       <Thead>
         <Tr>
@@ -77,14 +95,18 @@ const Sidebar = ({ boughtStocks }) => {
       </Tbody>
     </Table>
   </Box>
-
+            </Table>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 };
 
 
 const Stock = () => {
   const [balance, setBalance] = useState(
-    () => Number(localStorage.getItem("balance")) || 10000
+    () => Number(localStorage.getItem("balance")) || 100000
   );
   const [stocks, setStocks] = useState(() => {
     const storedValue = localStorage.getItem("objectArray");
@@ -116,6 +138,8 @@ const Stock = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [chartData, setChartData] = useState(generateDummyChartData());
+  const { isOpen: isDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -249,114 +273,144 @@ const Stock = () => {
 
   return (
     <ChakraProvider theme={theme}>
-      
       <Box p={6} display="flex">
-      <Box flex={1} mt={[12, 24]}>
-        <Text fontSize="6xl" mb={4}>
-          Balance: ${balance.toFixed(2)}
-        </Text>
-        <Table variant="simple" overflowX="auto" size={"sm"}>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Price</Th>
-              <Th>Change</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {stocks.map((stock) => (
-              <Tr key={stock.id}>
-                <Td>{stock.name}</Td>
-                <Td>Rs. {stock.price.toFixed(2)}</Td>
-                <Td>
-                  {typeof stock.price === "number" &&
-                  typeof stock.prevPrice === "number" ? (
-                    <StockChangeIndicator stock={stock} />
-                  ) : (
-                    <></>
-                  )}
-                </Td>
-                <Td>
-                  <Button
-                    colorScheme="blue"
-                    _hover={{ bg: "#b6c5fa", color: "white" }}
-                    borderRadius={"30px"}
-                    bg="blue.500"
-                    color="white"
-                    onClick={() => buyStock(stock)}
+        <Box flex={1} mt={[12, 24]}>
+          <Text fontSize="6xl" mb={4}>
+            Balance: Rs. {balance.toFixed(2)}
+          </Text>
+          <Box>
+            <Button onClick={onDrawerOpen} colorScheme="teal" mb={4}>
+              Portfolio
+            </Button>
+            <Table variant="simple" overflowX="auto" size={"sm"} borderRadius="md">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Price</Th>
+                  <Th>Change</Th>
+                  <Th>Actions</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {stocks.map((stock) => (
+                  <Tr key={stock.id}>
+                    <Td>{stock.name}</Td>
+                    <Td>Rs. {stock.price.toFixed(2)}</Td>
+                    <Td>
+                      {typeof stock.price === "number" &&
+                      typeof stock.prevPrice === "number" ? (
+                        <StockChangeIndicator stock={stock} />
+                      ) : (
+                        <></>
+                      )}
+                    </Td>
+                    <Td>
+                      <Button
+                        colorScheme="blue"
+                        _hover={{ bg: "#b6c5fa", color: "white" }}
+                        borderRadius={"30px"}
+                        bg="blue.500"
+                        color="white"
+                        onClick={() => buyStock(stock)}
+                      >
+                        Buy
+                      </Button>
+                      <Button
+                        margin={"5px"}
+                        borderRadius={"30px"}
+                        colorScheme="red"
+                        _hover={{ bg: "#ffa0a0", color: "white" }}
+                        bg="red.500"
+                        color="white"
+                        onClick={() => sellStock(stock)}
+                      >
+                        Sell
+                      </Button>
+                      <Button
+                        colorScheme="teal"
+                        _hover={{ bg: "#b6c5fa", color: "white" }}
+                        borderRadius={"30px"}
+                        bg="teal.500"
+                        color="white"
+                        onClick={() => handleModalToggle(stock)}
+                      >
+                        Stats
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </Box>
+          {selectedStock && (
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>{selectedStock.name} Statistics</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Text fontSize="xl" mb={2}>
+                    {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
+                  </Text>
+                  <AreaChart
+                    width={400}
+                    height={200}
+                    data={chartData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >
-                    Buy
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <Tooltip />
+                    <Area
+                      type="poppins"
+                      dataKey="price"
+                      stroke="#8884d8"
+                      fill={(props) =>
+                        props.payload.price > props.payload.prevPrice ? "green" : "red"
+                      }
+                    />
+                  </AreaChart>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
+                    Close
                   </Button>
-                  <Button margin={"5px"}
-                     borderRadius={"30px"}
-                    colorScheme="red"
-                    _hover={{ bg: "#ffa0a0", color: "white" }}
-                    bg="red.500"
-                    color="white"
-                    onClick={() => sellStock(stock)}
-                  >
-                    Sell
-                  </Button>
-                  <Button
-                    colorScheme="teal"
-                    _hover={{ bg: "#b6c5fa", color: "white" }}
-                    borderRadius={"30px"}
-                    bg="teal.500"
-                    color="white"
-                    onClick={() => handleModalToggle(stock)}
-                  >
-                    Stats
-                  </Button>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          )}
+          <Drawer placement="right" onClose={onDrawerClose} isOpen={isDrawerOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerBody p={4}>
+                <Table variant="simple">
+                  <Box p={4} bg="gray.200" w={300}>
+                  <Text style={{ fontWeight: "bold", fontSize: "30px" }}>Stocks Bought</Text>
 
+                    <Table variant="simple">
+                      <Thead>
+                        <Tr>
+                          <Th>Name</Th>
+                          <Th>Quantity</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {boughtStocks.map((stock) => (
+                          <Tr key={stock.id}>
+                            <Td>{stock.name}</Td>
+                            <Td>{stock.quantity}</Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </Box>
+                </Table>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
         </Box>
-      
-      
-             {selectedStock && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{selectedStock.name} Statistics</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text fontSize="xl" mb={2}>
-                {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
-              </Text>
-              <AreaChart
-                width={400}
-                height={200}
-                data={chartData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <XAxis dataKey="time" />
-                <YAxis />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <Tooltip />
-                <Area
-                  type="poppins"
-                  dataKey="price"
-                  stroke="#8884d8"
-                  fill={(props) =>
-                    props.payload.price > props.payload.prevPrice ? "green" : "red"
-                  }
-                />
-              </AreaChart>
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={() => setIsModalOpen(false)}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
-        {/*  for bought stocks */}
-        <Sidebar boughtStocks={boughtStocks} />
       </Box>
     </ChakraProvider>
   );
