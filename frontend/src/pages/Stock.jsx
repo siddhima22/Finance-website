@@ -60,17 +60,24 @@ const generateDummyChartData = () => {
 const Sidebar = ({ boughtStocks }) => {
   return (
     <Box p={4} bg="gray.200" w={300}>
-      <Text fontSize="xl" mb={2}>
-        Bought Stocks
-      </Text>
-      <ul>
+    <Table variant="simple">
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Quantity</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
         {boughtStocks.map((stock) => (
-          <li key={stock.id}>
-            {stock.name} - Quantity: {stock.quantity}
-          </li>
+          <Tr key={stock.id}>
+            <Td>{stock.name}</Td>
+            <Td>{stock.quantity}</Td>
+          </Tr>
         ))}
-      </ul>
-    </Box>
+      </Tbody>
+    </Table>
+  </Box>
+
   );
 };
 
@@ -244,8 +251,8 @@ const Stock = () => {
     <ChakraProvider theme={theme}>
       
       <Box p={6} display="flex">
-      <Box flex={1}>
-        <Text fontSize="2xl" mb={4}>
+      <Box flex={1} mt={[12, 24]}>
+        <Text fontSize="6xl" mb={4}>
           Balance: ${balance.toFixed(2)}
         </Text>
         <Table variant="simple" overflowX="auto" size={"sm"}>
