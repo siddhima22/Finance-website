@@ -261,7 +261,7 @@ const Stock = () => {
             {stocks.map((stock) => (
               <Tr key={stock.id}>
                 <Td>{stock.name}</Td>
-                <Td>${stock.price.toFixed(2)}</Td>
+                <Td>Rs. {stock.price.toFixed(2)}</Td>
                 <Td>
                   {typeof stock.price === "number" &&
                   typeof stock.prevPrice === "number" ? (
@@ -331,7 +331,7 @@ const Stock = () => {
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <Tooltip />
                 <Area
-                  type="monotone"
+                  type="poppins"
                   dataKey="price"
                   stroke="#8884d8"
                   fill={(props) =>
