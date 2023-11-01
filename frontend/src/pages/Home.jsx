@@ -15,6 +15,7 @@ import ReviewPage from "../components/ReviewPage ";
 import ForumApp from "../components/ForumApp";
 import Hero from "../components/Hero"
 import StatsCard from "../components/StatsCard"
+import HorizontalScrollPane from "../components/HorizontalScrollPane";
 // import Carousel from "../components/Carousel";
   const cardsData = [
     { id: 1, title: 'AI-driven guidance system', subtitle: 'AI Component', summary: 'AI-driven guidance system provides a well curated options for potential careers', image: 'https://excellediaventures.com/images/ai-new-icon.png' },
@@ -46,8 +47,8 @@ const Home = () => {
       textAlign="left"
     >
 
-   
     </Container>
+   <HorizontalScrollPane/>
     </Box>
 
     </Box>
