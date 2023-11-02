@@ -3,6 +3,7 @@ import {
   Box,
   Text,
   Button,
+  Flex,
   ChakraProvider,
   extendTheme,
   Table,
@@ -27,7 +28,8 @@ import {
   useDisclosure,
   Divider,
   useColorMode,
-  IconButton
+  IconButton,
+  Container
 
 } from "@chakra-ui/react";
 import { SunIcon, MoonIcon, CloseIcon } from "@chakra-ui/icons"; // Chakra UI icons
@@ -75,8 +77,8 @@ const Sidebar = ({ boughtStocks }) => {
 
   return (
     <>
-      <Button onClick={onOpen} display={["block", "none"]} mb={4}>
-        Open Sidebar
+      <Button onClick={onOpen} display={["block", "block"]} colorScheme="orange" mb={4}>
+        Portfolio
       </Button>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
@@ -118,10 +120,15 @@ const Stock = () => {
 
   const { colorMode, toggleColorMode } = useColorMode();
 
+  var prevPrice=3500;
   useEffect(() => {
     const interval = setInterval(() => {
       const timestamp = Date.now();
-      const price = Math.random() * 500 + 11000; // Random price between 11000 and 11500
+      const priceChange = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 50; // Randomly add or subtract a value between -500 and 500
+      const price = prevPrice + priceChange;
+      
+      // The rest of your code remains the same
+            prevPrice=price;
       const newDataPoint = [timestamp, price];
 
       setPriceData(prevData => {
@@ -393,99 +400,90 @@ const Stock = () => {
         <Divider/>
         <Sidebar boughtStocks={boughtStocks} />
       <Divider/>
-        <Table variant="striped" colorScheme="gray" overflowX="scroll" size={"sm"}>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Price</Th>
-              <Th>Change</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {stocks.map((stock) => (
-              <Tr key={stock.id}>
-                <Td>{stock.name}</Td>
-                <Td>₹ {stock.price.toFixed(2)}</Td>
-                <Td>
-                  {typeof stock.price === "number" &&
-                  typeof stock.prevPrice === "number" ? (
-                    <StockChangeIndicator stock={stock} />
-                  ) : (
-                    <></>
-                  )}
-                </Td>
-                <Td>
-                  <Button
-                    colorScheme="blue"
-                    _hover={{ bg: "#b6c5fa", color: "white" }}
-                    borderRadius={"30px"}
-                    bg="blue.500"
-                    color="white"
-                    onClick={() => buyStock(stock)}
-                  >
-                    Buy
-                  </Button>
-                  <Button margin={"5px"}
-                     borderRadius={"30px"}
-                    colorScheme="red"
-                    _hover={{ bg: "#ffa0a0", color: "white" }}
-                    bg="red.500"
-                    color="white"
-                    onClick={() => sellStock(stock)}
-                  >
-                    Sell
-                  </Button>
-                  <Button
-                    colorScheme="teal"
-                    _hover={{ bg: "#b6c5fa", color: "white" }}
-                    borderRadius={"30px"}
-                    bg="teal.500"
-                    color="white"
-                    onClick={() => handleModalToggle(stock)}
-                  >
-                    Stats
-                  </Button>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+      <Box overflowX="auto">
+  <Table variant="striped" colorScheme="gray" size={"sm"} minWidth="100%">
+    <Thead>
+      <Tr>
+        <Th>Name</Th>
+        <Th>Price</Th>
+        <Th>Change</Th>
+        <Th>Actions</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+      {stocks.map((stock) => (
+        <Tr key={stock.id}>
+          <Td>{stock.name}</Td>
+          <Td>₹ {stock.price.toFixed(2)}</Td>
+          <Td>
+            {typeof stock.price === "number" && typeof stock.prevPrice === "number" ? (
+              <StockChangeIndicator stock={stock} />
+            ) : (
+              <></>
+            )}
+          </Td>
+          <Td>
+            <Flex justify="space-around">
+              <Button
+                colorScheme="blue"
+                _hover={{ bg: "#b6c5fa", color: "white" }}
+                borderRadius={"30px"}
+                bg="blue.500"
+                color="white"
+                onClick={() => buyStock(stock)}
+              >
+                Buy
+              </Button>
+              <Button
+                borderRadius={"30px"}
+                colorScheme="red"
+                _hover={{ bg: "#ffa0a0", color: "white" }}
+                bg="red.500"
+                color="white"
+                onClick={() => sellStock(stock)}
+              >
+                Sell
+              </Button>
+              <Button
+                colorScheme="teal"
+                _hover={{ bg: "#b6c5fa", color: "white" }}
+                borderRadius={"30px"}
+                bg="teal.500"
+                color="white"
+                onClick={() => handleModalToggle(stock)}
+              >
+                Stats
+              </Button>
+            </Flex>
+          </Td>
+        </Tr>
+      ))}
+    </Tbody>
+  </Table>
+</Box>
 
         </Box>
       
       
              {selectedStock && (
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size={"full"}>
+        
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size={"full"} minWidth="1000%">
       <ModalOverlay />
       <ModalContent bg="gray.900">
         <ModalHeader color="white">{selectedStock.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-        {/* <IconButton
-         icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-         isRound
-         size="lg"
-         position="absolute"
-         top="20px"
-         right="20px"
-         onClick={toggleColorMode}
-       /> */}
-
-<Text fontSize="4xl" mb={4} color="white">
-          Balance: ₹{balance.toFixed(2)}
-        </Text>
- 
- {/* <Button onClick={()=>{
- 
- }}>jjjjjjjjjjjj</Button> */}
+          <Text fontSize="4xl" mb={4} color="white">
+            Balance: ₹{balance.toFixed(2)}
+          </Text>
+    
           <Text fontSize="xl" mb={2} color="white">
-              {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
-            </Text>
-  
+            {selectedStock.name} - Current Price: ${selectedStock.price.toFixed(2)}
+          </Text>
+    
           <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={transformPriceDatafunction(priceData)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }} >
-            <CartesianGrid strokeDasharray="3 3" />
+            <AreaChart data={transformPriceDatafunction(priceData)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
               <defs>
                 <linearGradient id="glowingAreaGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#4FD1C5" stopOpacity={0.8} />
@@ -507,35 +505,34 @@ const Stock = () => {
           </ResponsiveContainer>
         </ModalBody>
         <ModalFooter>
-        <Button
-                    colorScheme="blue"
-                    _hover={{ bg: "#b6c5fa", color: "white" }}
-                    borderRadius={"30px"}
-                    bg="blue.500"
-                    color="white"
-                    onClick={() => buyStock(stock)}
-                  >
-                    Buy
-                  </Button>
-                  <Button margin={"5px"}
-                     borderRadius={"30px"}
-                    colorScheme="red"
-                    _hover={{ bg: "#ffa0a0", color: "white" }}
-                    bg="red.500"
-                    color="white"
-                    onClick={() => sellStock(stock)}
-                  >
-                    Sell
-                  </Button>
-          <IconButton colorScheme="teal" mr={3} onClick={() => setIsModalOpen(false)} isRound icon={<CloseIcon/>}>
-            Close
-          </IconButton>
+          <Button
+            colorScheme="blue"
+            _hover={{ bg: "#b6c5fa", color: "white" }}
+            borderRadius={"30px"}
+            bg="blue.500"
+            color="white"
+            onClick={() => buyStock(stock)}
+          >
+            Buy
+          </Button>
+          <Button
+            margin={"5px"}
+            borderRadius={"30px"}
+            colorScheme="red"
+            _hover={{ bg: "#ffa0a0", color: "white" }}
+            bg="red.500"
+            color="white"
+            onClick={() => sellStock(stock)}
+          >
+            Sell
+          </Button>
+          <IconButton colorScheme="teal" mr={3} onClick={() => setIsModalOpen(false)} isRound icon={<CloseIcon />} />
         </ModalFooter>
       </ModalContent>
     </Modal>
+    
       )}
-        {/*  for bought stocks */}
-        <Sidebar boughtStocks={boughtStocks} />
+
       </Box>
     </ChakraProvider>
   );
