@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+\import React, { useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -43,6 +43,7 @@ import {
 } from "recharts";
 import StockChangeIndicator from "./StockChangeIndicator";
 import initialPriceData from "./priceData.json"
+import moment from 'moment';
 
 const theme = extendTheme({
   styles: {
@@ -68,6 +69,7 @@ const generateDummyChartData = () => {
   }
   return dummyData.reverse();
 };
+
 
 
 const Sidebar = ({ boughtStocks }) => {
@@ -115,7 +117,7 @@ const Sidebar = ({ boughtStocks }) => {
 const Stock = () => {
 
   const [priceData, setPriceData] = useState(initialPriceData);
-
+  const { isOpen: isDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
@@ -133,42 +135,14 @@ const Stock = () => {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []); // Empty dependency array ensures the effect runs once after the initial render
 
-  function transformPriceDatafunction(priceData) {
-    const transformedPriceData = priceData.map(([timestamp, price]) => {
-      const date = new Date(timestamp);
-      const formattedDate = `${getMonthName(date.getMonth())} ${date.getDate()} ${date.getFullYear()}, ${formatTime(date)}`;
-  
-      return {
-        x: formattedDate,
-        y: price,
-      };
-    });
-  
-    return transformedPriceData;
-  }
-  
-  function getMonthName(monthIndex) {
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June", "July",
-      "August", "September", "October", "November", "December"
-    ];
-  
-    return monthNames[monthIndex];
-  }
-  
-  function formatTime(date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return `${hours}:${padZero(minutes)}`;
-  }
-  
-  function padZero(number) {
-    return number < 10 ? `0${number}` : `${number}`;
-  }
-  
+  const transformedPriceData = priceData.map(([timestamp, price]) => ({
+    x: moment(timestamp).format('MMMM Do YYYY, h:mm'), // Format the timestamp for display
+    y: price, // Use the price as the y-axis value
+  }));
+
   
   const [balance, setBalance] = useState(
-    () => Number(localStorage.getItem("balance")) || 11000
+    () => Number(localStorage.getItem("balance")) || 100000
   );
   const [stocks, setStocks] = useState(() => {
     const storedValue = localStorage.getItem("stocks");
@@ -346,52 +320,27 @@ const Stock = () => {
       }));
       setStocks(updatedStocks);
       console.log("This runs every 1 second.");
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
-
-  function formatDate(value) {
-    const date = new Date(value);
-    const formattedDate = `${getMonthName(date.getMonth())} ${date.getDate()} ${date.getFullYear()}, ${formatTime(date)}`;
-    return formattedDate;
-  }
-  
-  function getMonthName(monthIndex) {
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June", "July",
-      "August", "September", "October", "November", "December"
-    ];
-  
-    return monthNames[monthIndex];
-  }
-  
-  function formatTime(date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return `${hours}:${padZero(minutes)}`;
-  }
-  
-  function padZero(number) {
-    return number < 10 ? `0${number}` : `${number}`;
-  }
-
-  
   return (
     <ChakraProvider theme={theme}>
       <Box p={6} display="flex">
       <Box flex={1} mt={[12, 24]}>
+   
         <Text fontSize="6xl" mb={4}>
           Balance: ₹{balance.toFixed(2)}
-        </Text>
-        <Text fontSize="xl" mb={4}>
-          Point: {(balance/10).toFixed(0)}
-          </Text>
+        </Text> 
+        
+      <Button onClick={onDrawerOpen} marginBottom={"10px"} colorScheme="teal" mb={4}>
+              Portfolio
+            </Button>
         <Divider/>
-        <Table variant="striped" colorScheme="gray" overflowX="scroll" size={"sm"}>
+        <Table variant="simple" overflowX="auto" size={"lg"}>
           <Thead>
             <Tr>
               <Th>Name</Th>
@@ -482,7 +431,7 @@ const Stock = () => {
             </Text>
   
           <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={transformPriceDatafunction(priceData)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }} >
+            <AreaChart data={transformedPriceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
               <defs>
                 <linearGradient id="glowingAreaGradient" x1="0" y1="0" x2="0" y2="1">
@@ -492,7 +441,7 @@ const Stock = () => {
               </defs>
               <XAxis dataKey="x" tick={{ fill: 'white' }} />
               <YAxis tick={{ fill: 'white' }} />
-              <Tooltip labelFormatter={value => formatDate(value)} />
+              <Tooltip labelFormatter={value => moment(value).format('MMMM Do YYYY, h:mm')} />
               <Legend />
               <Area
                 type="monotone"
@@ -533,7 +482,35 @@ const Stock = () => {
     </Modal>
       )}
         {/*  for bought stocks */}
-        <Sidebar boughtStocks={boughtStocks} />
+        <Drawer placement="right" onClose={onDrawerClose} isOpen={isDrawerOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody p={4}>
+            <Table variant="simple">
+              <Box p={4} bg="gray.200" w={300}>
+                <Text style={{ fontWeight: "bold", fontSize: "30px" }}>Stocks Bought</Text>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th>Name</Th>
+                      <Th>Quantity</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {boughtStocks.map((stock) => (
+                      <Tr key={stock.id}>
+                        <Td>{stock.name}</Td>
+                        <Td>{stock.quantity}</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Box>
+            </Table>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
       </Box>
     </ChakraProvider>
   );
