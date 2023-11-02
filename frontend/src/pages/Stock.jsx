@@ -391,6 +391,8 @@ const Stock = () => {
           Point: {(balance/10).toFixed(0)}
           </Text>
         <Divider/>
+        <Sidebar boughtStocks={boughtStocks} />
+      <Divider/>
         <Table variant="striped" colorScheme="gray" overflowX="scroll" size={"sm"}>
           <Thead>
             <Tr>
