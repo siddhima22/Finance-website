@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Flex,
   Container,
@@ -832,7 +830,7 @@ const Illustration = (props) => {
   );
 };
 
-export default function CallToActionWithIllustration() {
+export default function Hero() {
   return (
     <Container maxW={"5xl"}>
       <Stack
