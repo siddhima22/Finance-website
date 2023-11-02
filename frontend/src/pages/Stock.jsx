@@ -141,7 +141,7 @@ const Stock = () => {
 
   
   const [balance, setBalance] = useState(
-    () => Number(localStorage.getItem("balance")) || 100000
+    () => Number(localStorage.getItem("balance")) || 11000
   );
   const [stocks, setStocks] = useState(() => {
     const storedValue = localStorage.getItem("stocks");
@@ -319,7 +319,7 @@ const Stock = () => {
       }));
       setStocks(updatedStocks);
       console.log("This runs every 1 second.");
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearInterval(intervalId);
@@ -333,8 +333,11 @@ const Stock = () => {
         <Text fontSize="6xl" mb={4}>
           Balance: ₹{balance.toFixed(2)}
         </Text>
+        <Text fontSize="xl" mb={4}>
+          Point: {(balance/10).toFixed(0)}
+          </Text>
         <Divider/>
-        <Table variant="simple" overflowX="auto" size={"lg"}>
+        <Table variant="striped" colorScheme="gray" overflowX="auto" size={"lg"}>
           <Thead>
             <Tr>
               <Th>Name</Th>
@@ -346,7 +349,7 @@ const Stock = () => {
           <Tbody>
             {stocks.map((stock) => (
               <Tr key={stock.id}>
-                <Td>{stock.name}</Td>
+                <Td>{stock.name}</Td>a
                 <Td>₹ {stock.price.toFixed(2)}</Td>
                 <Td>
                   {typeof stock.price === "number" &&
@@ -425,7 +428,7 @@ const Stock = () => {
             </Text>
   
           <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={transformedPriceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <AreaChart data={transformedPriceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }} >
             <CartesianGrid strokeDasharray="3 3" />
               <defs>
                 <linearGradient id="glowingAreaGradient" x1="0" y1="0" x2="0" y2="1">
