@@ -6,6 +6,7 @@ import {
   Flex,
   ChakraProvider,
   extendTheme,
+  TableContainer,
   Table,
   Thead,
   Tbody,
@@ -400,67 +401,6 @@ const Stock = () => {
         <Divider/>
         <Sidebar boughtStocks={boughtStocks} />
       <Divider/>
-      <Box overflowX="auto">
-  <Table variant="striped" colorScheme="gray" size={"sm"} minWidth="100%">
-    <Thead>
-      <Tr>
-        <Th>Name</Th>
-        <Th>Price</Th>
-        <Th>Change</Th>
-        <Th>Actions</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      {stocks.map((stock) => (
-        <Tr key={stock.id}>
-          <Td>{stock.name}</Td>
-          <Td>₹ {stock.price.toFixed(2)}</Td>
-          <Td>
-            {typeof stock.price === "number" && typeof stock.prevPrice === "number" ? (
-              <StockChangeIndicator stock={stock} />
-            ) : (
-              <></>
-            )}
-          </Td>
-          <Td>
-            <Flex justify="space-around">
-              <Button
-                colorScheme="blue"
-                _hover={{ bg: "#b6c5fa", color: "white" }}
-                borderRadius={"30px"}
-                bg="blue.500"
-                color="white"
-                onClick={() => buyStock(stock)}
-              >
-                Buy
-              </Button>
-              <Button
-                borderRadius={"30px"}
-                colorScheme="red"
-                _hover={{ bg: "#ffa0a0", color: "white" }}
-                bg="red.500"
-                color="white"
-                onClick={() => sellStock(stock)}
-              >
-                Sell
-              </Button>
-              <Button
-                colorScheme="teal"
-                _hover={{ bg: "#b6c5fa", color: "white" }}
-                borderRadius={"30px"}
-                bg="teal.500"
-                color="white"
-                onClick={() => handleModalToggle(stock)}
-              >
-                Stats
-              </Button>
-            </Flex>
-          </Td>
-        </Tr>
-      ))}
-    </Tbody>
-  </Table>
-</Box>
 
         </Box>
       
@@ -534,6 +474,77 @@ const Stock = () => {
       )}
 
       </Box>
+      <Box
+      className="table-responsive rounded-3 customscroll"
+      p={4}
+      borderRadius="lg"
+      bg="white"
+      overflowY="scroll"
+      overflowX="auto"
+      boxSizing="border-box"
+    >
+      <TableContainer >
+      <Table variant="striped" colorScheme="gray" size={"sm"} minWidth="100%">
+    <Thead>
+      <Tr>
+        <Th>Name</Th>
+        <Th>Price</Th>
+        <Th>Change</Th>
+        <Th>Actions</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+      {stocks.map((stock) => (
+        <Tr key={stock.id}>
+          <Td>{stock.name}</Td>
+          <Td>₹ {stock.price.toFixed(2)}</Td>
+          <Td>
+            {typeof stock.price === "number" && typeof stock.prevPrice === "number" ? (
+              <StockChangeIndicator stock={stock} />
+            ) : (
+              <></>
+            )}
+          </Td>
+          <Td>
+            <Flex justify="space-around">
+              <Button
+                colorScheme="blue"
+                _hover={{ bg: "#b6c5fa", color: "white" }}
+                borderRadius={"30px"}
+                bg="blue.500"
+                color="white"
+                onClick={() => buyStock(stock)}
+              >
+                Buy
+              </Button>
+              <Button
+                borderRadius={"30px"}
+                colorScheme="red"
+                _hover={{ bg: "#ffa0a0", color: "white" }}
+                bg="red.500"
+                color="white"
+                onClick={() => sellStock(stock)}
+              >
+                Sell
+              </Button>
+              <Button
+                colorScheme="teal"
+                _hover={{ bg: "#b6c5fa", color: "white" }}
+                borderRadius={"30px"}
+                bg="teal.500"
+                color="white"
+                onClick={() => handleModalToggle(stock)}
+              >
+                Stats
+              </Button>
+            </Flex>
+          </Td>
+        </Tr>
+      ))}
+    </Tbody>
+  </Table>
+      </TableContainer>
+    </Box>
     </ChakraProvider>
   );
 };
