@@ -247,29 +247,25 @@ const NAV_ITEMS = [
     href: '/stock',
   },
   {
-    label: 'Investment Insights ',
-    href: '/display',
- 
-  },
-  {
     label: 'Quiz Game',
-    href: '#',
+    href: '',
   },
  
   {
     label: 'Resource Library',
-    children: [
-      {
-        label: 'Learn and Study',
-        subLabel: 'Take a quiz and get Study material required',
-        href: '#',
-      },
-      {
-        label: 'Video Explanations',
-        subLabel: 'Elaborate videos tailored to your learning',
-        href: '#',
-      },
-    ],
+    href:'/resources',
+    // children: [
+    //   {
+    //     label: 'Learn and Study',
+    //     subLabel: 'Take a quiz and get Study material required',
+    //     href: '#',
+    //   },
+    //   {
+    //     label: 'Video Explanations',
+    //     subLabel: 'Elaborate videos tailored to your learning',
+    //     href: '#',
+    //   },
+    // ],
   },
 ];
 

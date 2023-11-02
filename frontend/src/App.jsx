@@ -20,7 +20,6 @@ import CareersError from "./pages/careers/CareersError";
 import RootLayoutDash from "./layouts/RootLayoutDash";
 import Stock from "./pages/Stock";
 import Market from "./pages/Market";
-import MarketDisplay from "./pages/MarketDisplay";
 import Dashboard from "./pages/Dashboard";
 // layouts
 import RootLayout from "./layouts/RootLayout";
@@ -34,8 +33,6 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="stock" element={<Stock />} />
-      <Route path="market" element={<Market />} />
-      <Route path="display" element={<MarketDisplay />} />
 
       <Route path="dashboard" element={<RootLayoutDash />}>
         <Route index element={<Dashboard />} />
